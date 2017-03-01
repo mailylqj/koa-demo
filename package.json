@@ -1,0 +1,22 @@
+{
+  "name": "HelloKoa2",
+  "version": "0.1.0",
+  "private": true,
+  "scripts": {
+    "start": "node server/app.js"
+  },
+  "dependencies": {
+    "koa": "^2.0.0",
+    "koa-views": "^5.2.0",
+    "koa-router": "^7.0.0",
+    "koa-static": "^2.0.0",
+    "xtemplate": "^4.2.4",
+    "jade": "^1.11.0",
+    "xtpl": "^3.1.9",
+    "ejs": "*",
+    "path": "*"
+  },
+  "devDependencies": {
+
+  }
+}

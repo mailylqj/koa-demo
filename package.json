@@ -1,22 +1,49 @@
 {
   "name": "HelloKoa2",
   "version": "0.1.0",
+  "description": "a koa2 project",
   "private": true,
   "scripts": {
-    "start": "node server/app.js"
+    "init_sql": "node ./init/index.js",
+    "dev": "npm run dev_server & npm run dev_react",
+    "dev_server": "nodemon --harmony ./server/app",
+    "dev_static": "webpack --watch --config ./static/build/webpack.dev.config.js",
+    "start_static": "webpack --config ./static/build/webpack.prod.config.js",
+    "start_server": "node ./server/app.js",
+    "start": "npm run start_static & npm run start_server"
   },
   "dependencies": {
     "koa": "^2.0.0",
     "koa-views": "^5.2.0",
     "koa-router": "^7.0.0",
     "koa-static": "^2.0.0",
+    "koa-convert": "^1.2.0",
+    "koa-onerror": "*",
     "xtemplate": "^4.2.4",
     "jade": "^1.11.0",
     "xtpl": "^3.1.9",
-    "ejs": "*",
+    "ejs": "^2.5.5",
     "path": "*"
   },
   "devDependencies": {
-
+    "glob": "*",
+    "react": "*",
+    "react-dom": "*",
+    "react-router": "*",
+    "webpack": "^1.14.0",
+    "jsx-loader": "*",
+    "babel": "*",
+    "babel-cli": "*",
+    "babel-core": "*",
+    "babel-eslint": "*",
+    "babel-loader": "*",
+    "babel-plugin-add-module-exports": "*",
+    "babel-plugin-dev-expression": "*",
+    "babel-preset-es2015": "*",
+    "babel-preset-es2015-loose": "*",
+    "babel-preset-es2015-loose-native-modules": "*",
+    "babel-preset-react": "*",
+    "babel-preset-stage-1": "*",
+    "babel-register": "*"
   }
 }

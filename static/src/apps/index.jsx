@@ -1,12 +1,27 @@
-import React from 'react'
-import ReactDOM from 'react-dom'
+import React from 'react';
+import Herder from './../component/header.jsx';
+// import Main from './../component/main.jsx';
+// import Footer from './../component/footer.jsx';
 
 class App extends React.Component {
 	render() {
+		if (!this.props.style) {
+			return null;
+		}
 		return (
-			<div className="login-div"></div>
-		)
+			<div className={this.props.style}>
+				<Herder />
+			</div>
+		);
 	}
 }
 
-export default App
+App.propTypes = {
+	style: React.PropTypes.string
+};
+
+App.defaultProps = {
+	style: 'wapper'
+};
+
+export default App;

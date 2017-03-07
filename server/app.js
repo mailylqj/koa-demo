@@ -3,20 +3,20 @@ const path = require('path');
 const app = new Koa();
 const views = require('koa-views');
 const Router = require('koa-router');
-const static = require('koa-static');
+const koaStatic = require('koa-static');
 const convert = require('koa-convert');
 const onerror = require('koa-onerror');
 const config = require('./../config');
 
 // 加载模板引擎
 app.use(views(path.join(__dirname, './views'), {
-	extension: 'jade'
-}))
+	extension: 'jade',
+}));
 
 // 设置管理静态目录
-app.use(convert(static(
-	path.join(__dirname , './../static')
-)))
+app.use(convert(koaStatic(
+	path.join(__dirname, './../static')
+)));
 
 // 错误处理机制
 onerror(app);
@@ -25,24 +25,21 @@ onerror(app);
 const index = require('./routes/index');
 const login = require('./routes/login');
 
-
-
 // 装载所有子路由
-let router = new Router()
-router.use('/', index.routes(), index.allowedMethods())
-router.use('/login', login.routes(), login.allowedMethods())
+const router = new Router();
+router.use('/', index.routes(), index.allowedMethods());
+router.use('/login', login.routes(), login.allowedMethods());
 
 
-//router.use('/page', page.routes(), page.allowedMethods())
+// router.use('/page', page.routes(), page.allowedMethods())
 
 // 加载路由中间件
-app.use(router.routes()).use(router.allowedMethods())
- 
+app.use(router.routes()).use(router.allowedMethods());
 app.listen(config.serverPort);
-console.log('koa server is on port ' + config.serverPort);
+console.log(`koa server is on port, ${config.serverPort}`);
 
 // 子路由2
-/*let page = new Router()
+/* let page = new Router()
 page.get('/404', async ( ctx )=>{
 	ctx.body = '404 page!'
 }).get('/helloworld', async ( ctx )=>{

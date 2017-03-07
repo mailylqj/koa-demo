@@ -13,25 +13,19 @@
     "start": "npm run start_static & npm run start_server"
   },
   "dependencies": {
+    "ejs": "^2.5.5",
+    "jade": "^1.11.0",
     "koa": "^2.0.0",
-    "koa-views": "^5.2.0",
-    "koa-router": "^7.0.0",
-    "koa-static": "^2.0.0",
     "koa-convert": "^1.2.0",
     "koa-onerror": "*",
+    "koa-router": "^7.0.0",
+    "koa-static": "^2.0.0",
+    "koa-views": "^5.2.0",
+    "path": "*",
     "xtemplate": "^4.2.4",
-    "jade": "^1.11.0",
-    "xtpl": "^3.1.9",
-    "ejs": "^2.5.5",
-    "path": "*"
+    "xtpl": "^3.1.9"
   },
   "devDependencies": {
-    "glob": "*",
-    "react": "*",
-    "react-dom": "*",
-    "react-router": "*",
-    "webpack": "^1.14.0",
-    "jsx-loader": "*",
     "babel": "*",
     "babel-cli": "*",
     "babel-core": "*",
@@ -44,6 +38,19 @@
     "babel-preset-es2015-loose-native-modules": "*",
     "babel-preset-react": "*",
     "babel-preset-stage-1": "*",
-    "babel-register": "*"
+    "babel-register": "*",
+    "eslint": "^2.5.3",
+    "eslint-config-airbnb": "^6.2.0",
+    "eslint-config-standard": "^7.0.0",
+    "eslint-loader": "^1.6.3",
+    "eslint-plugin-promise": "^3.5.0",
+    "eslint-plugin-react": "^4.2.3",
+    "eslint-plugin-standard": "^2.1.1",
+    "glob": "*",
+    "jsx-loader": "*",
+    "react": "*",
+    "react-dom": "*",
+    "react-router": "*",
+    "webpack": "^1.14.0"
   }
 }

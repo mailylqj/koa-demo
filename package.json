@@ -5,23 +5,26 @@
   "private": true,
   "scripts": {
     "init_sql": "node ./init/index.js",
-    "dev": "npm run dev_server & npm run dev_react",
-    "dev_server": "nodemon --harmony ./server/app",
+    "dev": "npm run dev_server && npm run dev_static",
+    "dev_server": "nodemon ./server/app.js",
     "dev_static": "webpack --watch --config ./static/build/webpack.dev.config.js",
     "start_static": "webpack --config ./static/build/webpack.prod.config.js",
     "start_server": "node ./server/app.js",
-    "start": "npm run start_static & npm run start_server"
+    "start": "npm run start_static & npm run start_server",
+    "test_server": "node ./test/app.js",
+    "test": "npm run test_server"
   },
   "dependencies": {
     "ejs": "^2.5.5",
     "jade": "^1.11.0",
     "koa": "^2.0.0",
     "koa-convert": "^1.2.0",
-    "koa-onerror": "*",
+    "koa-onerror": "^3.1.0",
     "koa-router": "^7.0.0",
     "koa-static": "^2.0.0",
     "koa-views": "^5.2.0",
-    "path": "*",
+    "koa-bodyparser": "^4.2.0",
+    "path": "^0.12.7",
     "xtemplate": "^4.2.4",
     "xtpl": "^3.1.9"
   },
@@ -39,7 +42,7 @@
     "babel-preset-react": "*",
     "babel-preset-stage-1": "*",
     "babel-register": "*",
-    "eslint": "^2.5.3",
+    "eslint": "^3.17.1",
     "eslint-config-airbnb": "^6.2.0",
     "eslint-config-standard": "^7.0.0",
     "eslint-loader": "^1.6.3",
@@ -51,6 +54,8 @@
     "react": "*",
     "react-dom": "*",
     "react-router": "*",
-    "webpack": "^1.14.0"
+    "webpack": "^1.14.0",
+    "webpack-merge": "*",
+    "nodeppt": "^1.4.2"
   }
 }

@@ -5,7 +5,8 @@ class Header extends React.Component {
 		super(props);
 		this.state = {
 			message: 'Hello!',
-			like: false
+			like: false,
+			input: 'default'
 		};
 		// This line is important! 如果handleClick是函数表达式
 		// this.handleClick = this.handleClick.bind(this);
@@ -13,6 +14,9 @@ class Header extends React.Component {
 	handleClick = () => {
 		// alert(this.state.message);
 		this.setState({ liked: !this.state.liked });
+	}
+	handleChange = (e) => {
+		this.setState({ input: e.target.value });
 	}
 	render() {
 		if (!this.props.style) {
@@ -24,8 +28,8 @@ class Header extends React.Component {
 				<div className="menu">
 					<ul>
 						<li>You {text} this. Click to toggle &middot;.</li>
-						<li>dddddd</li>
-						<li>dddddd</li>
+						<li><input value={this.state.input} onChange={this.handleChange} /></li>
+						<li><input value={this.state.input} onChange={this.handleChange} /></li>
 						<li>dddddd</li>
 						<li>dddddd</li>
 					</ul>

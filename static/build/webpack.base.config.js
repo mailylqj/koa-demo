@@ -7,7 +7,7 @@ const CommonsChunkPlugin = new webpack.optimize.CommonsChunkPlugin('common.js');
 var node_mudules_dir = path.resolve(__dirname, 'node_mudules');*/
 
 const entry = {};
-const files = glob.sync('static/src/pages/*.js');
+const files = glob.sync('../src/pages/*.js');
 files.forEach((file) => {
 	const name = file.replace(/(.*\/)*([^.]+).*/ig, '$2');
 	// .replace(/(.*\/)*([^.]+).*/ig,"$2");  匹配文件名
@@ -19,17 +19,17 @@ files.forEach((file) => {
 module.exports = {
 	plugins: [CommonsChunkPlugin],
 	entry: {
-		index: path.resolve(__dirname, 'static/src/pages/index.js'),
-		login: path.resolve(__dirname, 'static/src/pages/login.js'),
+		index: path.resolve(__dirname, '../src/pages/index.js'),
+		login: path.resolve(__dirname, '../src/pages/login.js'),
 		vendor: ['react', 'react-dom']
 	},
 	output: {
-		path: path.resolve(__dirname, 'static/dist/pages/'),
+		path: path.resolve(__dirname, '../dist/pages/'),
 		filename: '[name].js'
 	},
 	resolve: {
 		extensions: ['', '.js', '.jsx'],
-		modules: [path.join(__dirname, './static/src/pages'), 'node_modules']
+		modules: [path.join(__dirname, '../src/pages'), 'node_modules']
 	},
 	devServer: {
 		contentBase: './dist',

@@ -1,65 +1,56 @@
 const path = require('path');
 const webpack = require('webpack');
-// const React =  require('react');
 const glob = require('glob');
-const CommonsChunkPlugin = new webpack.optimize.CommonsChunkPlugin('common.js');
+const CommonsChunkPlugin = new webpack.optimize.CommonsChunkPlugin('common/common');
 /* var webpack = require('gulp-webpack');
 var node_mudules_dir = path.resolve(__dirname, 'node_mudules');*/
 
-const entry = {};
-const files = glob.sync('../src/pages/*.js');
+const entrys = {};
+const files = glob.sync('static/src/pages/*.js');
 files.forEach((file) => {
-	const name = file.replace(/(.*\/)*([^.]+).*/ig, '$2');
-	// .replace(/(.*\/)*([^.]+).*/ig,"$2");  匹配文件名
-	entry[name] = path.resolve(__dirname, file);
+	// const name = file.replace(/(.*\/)*([^.]+).*/ig, '$2');
+	const name = file.replace(/static\/src\/(pages\/[^\*\@\&]+).js/ig, '$1');
+	entrys[name] = path.resolve(file);
 });
-
-// console.log(path.resolve(__dirname, 'static/src/pages/*.js'))
+entrys['common/vendor'] = ['react', 'react-dom'];
 
 module.exports = {
 	plugins: [CommonsChunkPlugin],
-	entry: {
-		index: path.resolve(__dirname, '../src/pages/index.js'),
-		login: path.resolve(__dirname, '../src/pages/login.js'),
-		vendor: ['react', 'react-dom']
-	},
+	entry: entrys,
 	output: {
-		path: path.resolve(__dirname, '../dist/pages/'),
-		filename: '[name].js'
+		path: path.join(__dirname, '../dist'),
+		filename: '[name].js',
+		chunkFilename: 'components/[name].[chunkhash:5].chunk.js',
+		publicPath: '/dist/'
 	},
 	resolve: {
-		extensions: ['', '.js', '.jsx'],
-		modules: [path.join(__dirname, '../src/pages'), 'node_modules']
+		extensions: ['.js', '.jsx', 'json'],
+		modules: [path.join(__dirname, '../src/'), 'node_modules'],
+		alias: {
+			'&': path.join(__dirname, '../stable'),
+			'@': path.join(__dirname, '../src')
+		}
 	},
 	devServer: {
 		contentBase: './dist',
 		hot: true,
 		historyApiFallback: true
 	},
-	eslint: {
-		configFile: './.eslintrc'
-	},
 	module: {
-		preLoaders: [
+		rules: [
 			{
-				test: /\.js$/,
+				test: /\.(js|jsx)$/,
 				exclude: /node_modules/,
+				enforce: 'pre',
 				loader: 'eslint-loader'
-			}
-		],
-		loaders: [
-			{
-				test: /\.jsx?$/,
-				exclude: /node_mudules/,
-				loader: 'jsx-loader'
 			},
 			{
 				test: /\.(es6|js|jsx)$/,
 				exclude: /node_mudules/,
-				loader: 'babel',
-				query:
-				{// 没加stage-1，无法使用es6的箭头函数
-					presets: ['es2015', 'react', 'stage-1']
+				loader: 'babel-loader',
+				query: {// 没加stage-1，无法使用es6的箭头函数
+					presets: ['es2015', 'react', 'stage-1'],
+					plugins: ['add-module-exports']
 				}
 			}
 		]

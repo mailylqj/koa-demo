@@ -22,7 +22,7 @@ class Header extends React.Component {
 		if (!this.props.style) {
 			return null;
 		}
-		let text = this.state.liked ? 'like' : 'haven\'t liked';
+		const text = this.state.liked ? 'like' : 'haven\'t liked';
 		return (
 			<div className={this.props.style} onClick={this.handleClick}>
 				<div className="menu">

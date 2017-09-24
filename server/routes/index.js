@@ -2,9 +2,9 @@ const Router = require('koa-router');
 const router = new Router();
 
 router.get('/', async (ctx, next) => {
-	const title = 'hello koa';
+	const titleTxt = 'hello koa';
 	await ctx.render('index', {
-		titleTxt: title,
+		title: titleTxt,
 		content: 'kkkkk'
 	});
 });

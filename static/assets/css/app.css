@@ -1,0 +1,789 @@
+.header-box {
+	border: 1px solid #e8e8e8;
+}
+
+html {
+	overflow: auto;
+}
+
+body {
+	background-color: #f3f3f3;
+}
+
+.dis-scroll{
+	height: 100%;
+	overflow: hidden;
+}
+
+.fixed-menu{
+	position: fixed!important;
+	top: 0!important;
+	left: 0!important;
+}
+
+select option:disabled{
+	color: #c3c3c3;
+}
+
+.back-drop{
+	position: fixed;
+	background: rgba(255, 255, 255, 0.7);
+	width: 100%;
+	height: 100%;
+	top: 0px;
+	left: 0px;
+	right: 0px;
+	z-index: 99999;
+}
+
+.back-drop img{
+	position: absolute;
+	left: 50%;
+	top: 50%;
+	width: 100px;
+	height: 100px;
+	margin-left: -50px;	
+	margin-top: -50px;
+}
+
+#nav ul li.active a,
+#nav>li.active>a,
+#nav>li.active>a>*{
+	text-decoration: none!important;
+}
+
+.content {
+	position: absolute;
+	top: 100px;
+	right: 0;
+	bottom: 0;
+	width: 100%;
+	left: 0;
+	-webkit-overflow-scrolling: touch;
+	-webkit-overflow-scrolling: -blackberry-touch;
+	-webkit-transition: none;
+	-moz-transition: none;
+	-o-transition: none;
+	transition: none;
+}
+
+@media (min-width: 768px) {
+	.content {
+		top: 50px;
+		width: auto;
+		left: 220px;
+	}
+
+	.nav-min .content {
+	  left: 60px;
+	}
+}
+
+.ui-select>select{
+	width: 100%;
+	min-width: 140px;
+	z-index: 8;
+}
+
+.block{
+	display: block;
+}
+
+.ui-checkbox input[type="checkbox"] + span:before {
+	background-color: #fff;
+}
+
+.login-header {
+	height: 115px;
+	line-height: 115px;
+	text-align: center;
+	background-color: #005580;
+}
+.print-logo{
+	display: none;
+}
+
+#top {
+	margin-bottom: 20px;
+}
+
+#footer {
+	min-height: 1px;
+	margin-bottom: 50px;
+}
+
+.login-content {
+	width: 435px;
+	margin-left: auto;
+	margin-right: auto;
+	padding-top: 30px;
+}
+
+#nav-container {
+	width: 220px;
+	min-height: 600px;
+}
+
+.ui-select {
+	margin: 0;
+	background-color: #fff;
+}
+
+.top-header .top-nav .nav-right > li > a {
+	width: auto;
+}
+
+.top-header .logo a img {
+	vertical-align: baseline;
+}
+
+.mt-10{
+	margin-top: 10px;
+}
+
+.mt-30 {
+	margin-top: 30px;
+}
+
+.mr-10{
+	margin-right: 10px;
+}
+
+.mr-20{
+	margin-right: 20px;
+}
+
+.pl-25 {
+	padding-left: 25px;
+}
+
+.pl-15{padding-left: 15px;}
+
+.pt-5 {
+	padding-top: 5px;
+}
+
+.pt-20{
+	padding-top: 20px;
+}
+
+.capitalize{
+	text-transform: capitalize;
+}
+
+.location-finder {
+	border-right: 1px solid #e9e9e9;
+}
+
+.fc-normal {
+	color: #767676;
+}
+
+.fs-22 {
+	font-size: 22px;
+}
+
+.search-noresult {
+	padding: 50px 0;
+	text-align: center;
+}
+
+.csr-dropdown{
+	position: relative;
+}
+
+.csr-dropdown .csr-menu{
+	position: absolute;
+	top: 100%;
+	right: 5px;
+	z-index: 1000;
+	float: left;
+	min-width: 160px;	
+	margin: 0px;
+	display: none;
+	list-style: none;
+	font-size: 14px;
+	text-align: left;
+	background-color: #242633;
+	border: 1px solid #ccc;
+	border: 1px solid rgba(0,0,0,0.15);
+	border-radius: 0;
+	-webkit-box-shadow: 0 6px 12px rgba(0,0,0,0.175);
+	box-shadow: 0 6px 12px rgba(0,0,0,0.175);
+	background-clip: padding-box;
+}
+
+.csr-dropdown.open .csr-menu{
+	display: block;
+}
+
+.csr-dropdown .csr-menu:after{
+	content: " ";
+	position: absolute;
+	right: 13px;
+	top: -14px;
+	border: 7px solid transparent;
+	border-bottom: 7px solid #242633;
+}
+
+.csr-dropdown .csr-menu .menu-group{
+	list-style: none;
+	padding: 5px 0px;
+}
+
+.csr-dropdown .csr-menu .menu-group + .menu-group{
+	border-top: 1px solid #fff;
+}
+
+.csr-dropdown .csr-menu .menu-group>li>a{
+	color: #999;
+	display: block;
+	padding: 3px 20px;
+	clear: both;
+	font-weight: normal;
+	line-height: 1.42857;
+	white-space: nowrap;
+}
+
+.csr-dropdown .csr-menu .menu-group>li>a:hover{
+	background-color: #31c0be;
+	color: #fff;
+}
+
+.topMenu .child .sub-menu{
+	display: inline-block;
+	width: 160px;
+	vertical-align: top;
+}
+
+/*  User detail page
+-----------------------------------------*/
+/*position tabs*/
+.ps-relative{
+	position: relative;
+	padding-top: 80px;	
+}
+
+.ps-relative.fgaccount{
+	padding-top: 200px;
+}
+
+.ps-absolute{
+	width: 100%;
+	background: #f3f3f3;
+	position: absolute;
+	top: 0px;
+	right: 0px;
+	left: 0px;
+	z-index: 9;
+}
+
+.position-tabs{
+	display: table;
+	width: 100%;
+	padding: 0px;
+	margin: 0px;
+}
+
+.position-tabs .tabs-list{
+	display: table-cell;
+	text-align: center;
+	border-bottom: 1px solid #dedede;
+}
+
+.position-tabs .tabs-list.active{
+	border: 1px solid #dedede;
+	border-bottom: 0px;
+	background: #fff;
+}
+
+.position-tabs .tabs-list > a{
+	display: block;
+	text-decoration: none;
+	padding: 5px 0;
+}
+
+.empty-message{
+	text-align: center;
+	padding: 30px 0;
+}
+
+.html-unoffset{
+	overflow-y:hidden;
+}
+.single-Select{
+	padding-right: 1px;
+	height: 120px;
+	border: 1px solid #cbd5dd;
+	
+}
+.single-Select ul{
+	padding: 0;
+	height: 118px;
+	overflow:auto;
+}
+.single-Select ul li{
+	display: table;
+	width: 100%;
+}
+.single-Select ul li span{
+	padding: 0 5px;
+	display: table-cell;
+	word-break: break-all;
+}
+.single-Select ul li span + span{
+	text-align: right;
+	white-space:nowrap;
+}
+.single-Select ul li:hover span{
+	background: #ddd;
+	color: #000;
+}
+.single-select-active,
+.single-Select ul .single-select-active:hover span{
+	color: white;
+	background-color: #4DB2F9;
+}
+.accout-job-highlight {
+	background-color: #e4e3e3;
+}
+.user-accout-job-site .accordion-top {
+	margin-top: 15px;
+}
+.mainsandjobs label span {
+	font-weight: normal;
+}
+.changeMasterCus .text-line-center {
+	line-height: 34px;
+}
+.user-detail-master-clear {
+	clear: both;
+}
+.user-detail-master-height {
+	height: 26px;
+}
+.user-detail-master-float {
+	float: right;
+}
+/*userCreate.html start*/
+.user-create-error-Info{
+	display:inline-block;
+	width: 100%;
+}
+
+.user-create-error-Info-header{
+	font-size: 24px;
+}
+
+.user-search-padding-bottom{
+	padding-bottom: 10px;
+}
+.error-email{
+	border-color:#e87352!important;
+}
+/*userCreate.html end*/
+
+/*orgDetail start*/
+#formNoteInfo .org-modal-note{
+	height:130px;
+}
+.orgdetail-his-info{
+	padding: 20px;
+}
+.text-hidden-ellipsis {
+	width:100px;
+	white-space:nowrap; 
+	overflow:hidden; 
+	text-overflow:ellipsis;
+}
+/*orgDetail end*/
+
+.currently{
+	padding: 10px 15px 5px;
+	background: #fff;
+	border-bottom: 1px solid #dedede;
+	box-shadow: 0px 2px 1px #ddd;
+}
+
+.phone-number > span{
+	vertical-align: middle;
+}
+
+.phone-number .phone-area{
+	display: inline-block;
+	width: 60px;
+}
+
+.phone-number .phone-ext{
+	width: 75px;
+	display: inline-block;
+}
+
+/*User detail site-accordion */
+.site-accordion .accordion-top{
+	cursor: pointer;
+}
+
+.site-accordion .accordion-top .plus-minus{
+	background: #24bfbf;
+	width: 33px;
+	height: 33px;
+	border: 1px solid #21abab;
+	color: #fff;
+	position: relative;
+	display: inline-block;
+	vertical-align: middle;
+}
+
+.site-accordion .accordion-top .plus-minus:after{
+	content: '+';
+	position: absolute;
+	left: 12px;
+	top: 7px;
+	display: block;
+}
+
+.site-accordion .open .accordion-top .plus-minus:after{
+	content: '--';
+	letter-spacing: -2px;
+}
+.site-accordion-padding{
+	padding-top: 20px;
+}
+.accordion-body-info-padding{
+	padding-left: 21px;
+}
+.btn-tooltip {
+	display: inline-block;
+}
+.master-cus-table {
+	width:100%;
+}
+.master-cus-table tr {
+	line-height:40px;
+}
+.master-cus-table td{
+	padding: 4px 0px;
+}
+/*Mains and jobs information*/
+.job-board .border-bottom{
+	border-bottom: 1px solid #dedede;
+}
+
+.job-board .board-box{
+	border: 1px solid #dedede;
+	border-top: 0px;
+}
+
+.job-board .board-box .list{
+	padding: 10px 0px 10px 10px
+}
+
+.job-board .list-group .list:first-child{
+	background: #f6f6f6;
+}
+
+.job-board .board-box .list .ui-checkbox{
+	margin-bottom: 0px;
+}
+
+.payment-info,
+.address-info{
+	padding: 0 15px;
+}
+
+.payment-info .list-item,
+.address-info .list-item{
+	border: 1px solid #dedede;
+}
+
+.payment-info .list-item + .list-item,
+.address-info .list-item + .list-item{
+	border-top: 0px;
+}
+
+.payment-info .accordion-top,
+.address-info .accordion-top{
+	padding: 5px 0;
+	background: #f6f6f6;
+}
+
+.payment-info .accordion-body,
+.address-info .accordion-body{
+	padding: 5px 0;
+}
+
+.payment-info table,
+.address-info table{
+	width: 100%;
+}
+
+.payment-info table td,
+.address-info table td{
+	padding-top: 5px;
+	width: 25%;
+}
+/*Order Detail*/
+.full-table{
+	width: 100%;
+}
+
+.full-table td{
+	width: 50%;
+	padding-top: 5px;
+}
+
+.cc-fraud{
+	width: 100%;
+}
+
+.cc-fraud tr td:first-child,
+.cc-fraud tr td:last-child{
+	width: 18%
+}
+
+.cc-fraud .btn-warning{
+	padding: 1px 5px;
+	height: 33px;
+	font-size: 12px;
+	line-height: 1.2;
+	border-radius: 0;
+}
+
+.fraud-comment{
+	width: 100%;
+	height: 120px;
+	resize: none;
+}
+
+.thick-line{
+	height: 0px;
+	border-top: 2px solid #ddd;
+}
+.thin-line{
+	height: 0px;
+	border-top: 1px solid #ddd;
+}
+.vl-top{
+	vertical-align: top;
+}
+.vl-middle{
+	vertical-align: middle;
+}
+.shipment .border-bottom{
+	border-bottom: 1px solid #dedede;
+}
+
+.other-info{
+	padding: 10px 20px;
+	text-align: right;
+	border: 1px solid #ddd;
+	border-top: none;
+	border-bottom: 0px;
+}
+
+.item-table{
+	width: 100%;
+}
+
+.item-table tr th,
+.item-table tr td{
+	padding: 10px;
+	border: 1px solid #ddd;
+}
+
+.item-table .no-border{
+	border: 0px;
+}
+
+.table-cell{
+	display: table-cell;
+}
+
+.pref-input{
+	width: 80px;
+	display: inline-block;
+}
+
+.pref-way{
+	display: inline-block;
+	width: 140px;
+}
+
+.comments{
+	width: 100%;
+	height: 100px;
+	display: block;
+	resize: none;
+}
+
+
+/*formChangeShippingAddrModal start*/
+.change-addr-modal-tel{
+	display: inline-block;
+	width: 30%;
+}
+
+
+/*orgDetail end*/
+.top-menu-font{
+	font-family: "ArialMT","Arial";
+	font-weight: 400;
+	font-style: normal;
+	font-size: 13px;
+	color: #333;
+}
+
+/*  pinned organization page
+-----------------------------------------*/
+.pinned-checkbox{
+	margin: 0 0 0px 20px
+}
+
+.table-dynamic .table-bordered thead th>.th{
+	padding-left: 10px;
+}
+
+.ui-checkbox input[type="checkbox"]+span:before{
+	margin-right: 0;
+}
+
+.pinNoResult{
+	margin: 110px 0;
+	font-weight: bold;
+}
+
+/* Reports Page*/
+.reports-filter{
+	padding: 0px 15px;
+}
+
+.web-enable{
+	width: 15px;
+	height: 15px;
+	display: block;
+	margin: 0px auto;
+	background-color: #5ECC99;
+}
+
+/*masterCustomer*/
+@media screen and (min-width: 1200px) { 
+	.slt-active{
+		width: 15px;
+		height: 15px;
+		position: absolute;
+		top: 10px;
+		left: -10px;
+		background-color: #5ECC99;
+	}
+} 
+@media screen and (max-width: 1200px) { 
+	.slt-active{
+		width: 15px;
+		height: 15px;
+		vertical-align: middle;
+		margin-right: 5px;
+		display: inline-block;
+		*zoom:1;
+		*display:inline;
+		background-color: #5ECC99;
+	}
+	.adapt-width{
+		width: -moz-calc(100% - 24px);
+		width: -webkit-calc(100% - 24px);
+		*width: 80%;
+		display: inline;
+	}
+} 
+.masterCus-branch-border{
+	padding-top: 10px;
+	border-right:1px solid #dedede;
+	border-left:1px solid #dedede;
+	border-bottom:1px solid #dedede;
+	padding-left: 42px;
+}
+.masterCus-branch-border .list span{
+	font-weight:normal;
+}
+
+.ap-user{
+	padding-right: 30px;
+}
+
+.ap-user .user-row{
+	padding: 4px 0;
+}
+
+.site-accordion .accordion-top .plus-minus.plus-minus-back-color{
+	background: #60cd9b;
+	border: 1px solid #33a370;
+}
+.choose-select{
+	width:100%;
+}
+
+.mc-checkbox{
+	margin-right: 5px;
+}
+.mc-checkbox input[type="checkbox"]+span:before{
+	margin-right: 5px;
+}
+.bg-white[readonly]{
+	background: #fff;
+}
+.full-table td.auto-width{
+	width: auto;
+}
+.pos-relative{
+	position: relative;
+}
+.branch-m{
+	margin: 10px 0 10px 0;
+}
+.open>.accordion-top{
+	background-color: #F6F6F6;
+}
+.accordion-top .full-table td{
+	padding-top: 0;
+}
+.modal .btn[disabled]{
+	pointer-events: auto;
+	cursor: default;
+}
+.ui-checkbox input[type="checkbox"]:disabled:checked+span:after {
+	background: url("../img/checkmark.png") no-repeat center center;
+}
+
+.input-group-addon{
+	cursor: pointer;
+	background:#fff;
+}
+
+@media print {
+	body{
+		font-family: "Lato","Helvetica Neue",Arial,sans-serif;
+		font-size: 14px;
+		line-height: 1.42857;
+		color: #767676;
+	}
+	.content{
+		top: 80px;
+		right: 0;
+		left: 0;
+		width: auto;
+	}
+	.print-logo{
+		vertical-align: top;
+		display: block;
+	}
+	.page{
+		padding: 0;
+	}
+	.glyphicon,
+	.top-nav,
+	.print-hide,
+	.default-logo,
+	#nav-container{
+		display: none;
+	}
+}

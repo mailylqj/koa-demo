@@ -1,6 +1,7 @@
 import React from 'react';
 // import axios from 'axios';
-//import Websocket from 'react-websocket';
+// import WebSocket from 'ws';
+import Websocket from 'react-websocket';
 
 class Main extends React.Component {
 	constructor(props) {
@@ -10,7 +11,7 @@ class Main extends React.Component {
 		};
 	}
 	componentDidMount() {
-		this.socket = new WebSocket('ws://localhost:8090/chat');
+		this.socket = new WebSocket('ws://localhost:8090/ws/chat');
 		this.socket.onopen = () => this.onSocketOpen();
 		this.socket.onmessage = (m) => this.onSocketData(m);
 		this.socket.onclose = () => this.onSocketClose();
@@ -19,9 +20,9 @@ class Main extends React.Component {
 		console.log('Connection established!');
 	}
 	onSocketData(data) {
-		console.log(data)
+		console.log(data);
 		const result = JSON.parse(data.data);
-		this.setState({ count: this.state.count + result.count });
+		this.setState({ count: result.count });
 	}
 	onSocketClose() {
 		console.log('Connection closed!');
@@ -31,11 +32,20 @@ class Main extends React.Component {
 		this.setState({ count: e.target.value });
 		this.socket.send(JSON.stringify(msg));
 	}
+	handleData(data) {
+		let result = JSON.parse(data);
+		this.setState({count: result.count});
+	}
 	render() {
 		return (
 			<div>
-				<ul>{this.state.count}</ul>
-				<input value={this.state.count} onChange={this.handleChange} />
+				<ul>
+					<li>{this.state.count}</li>
+					<li><input value={this.state.count} onChange={this.handleChange} /></li>
+					<li>Count: <strong>{this.state.count}</strong></li>
+					<Websocket url='ws://localhost:8090/ws/chat'
+					onMessage={this.handleData.bind(this)}/>
+				</ul>				
 			</div>
 		);
 	}

@@ -3,13 +3,13 @@ html
 	head
 		title #{title}
 		meta(http-equiv="Content-Type",content="text/html; charset=utf-8")
+		link(type="text/css",rel="stylesheet",href="/dist/common/style.css")
+		link(type="text/css" rel="stylesheet" href="assets/css/font-awesome.css")
+		link(type="text/css" rel="stylesheet" href="assets/css/main.css")
 	body
-		header
-			include include/header.jade
-		main
-			#container
-		footer
-			include include/footer.jade
+		
+		#container
+
 		script(type='text/javascript', src='/dist/common/common.js')
 		script(type='text/javascript', src='/dist/common/vendor.js')
-		script(type='text/javascript', src='/dist/pages/index.js')
+		script(type='text/javascript', src='/dist/apps/app.js')

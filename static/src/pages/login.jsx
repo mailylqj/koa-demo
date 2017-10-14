@@ -21,12 +21,15 @@ class Login extends React.Component {
 		this.setState({ password: e.target.value });
 	}
 	handleLogin = () => {
+		const that = this;
 		const user = { name: this.state.username, password : this.state.password };
-		axios.post('/ajax/Login', {
-
-		}).then();
-		this.props.history.push('/');
-		console.log(user);
+		axios.post('/ajax/Login', user).then(function(data){
+			console.log(data);
+			that.props.history.push('/');
+		}).catch(function(error){
+			console.log(error);
+			that.props.history.push('/login');
+		});
 	}
 	render() {
 		return (

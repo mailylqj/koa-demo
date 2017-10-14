@@ -37,6 +37,14 @@ Aside.defaultProps = {
 	style: 'header',
 	menus: [
 		{
+			name: '在线设备',
+			link: '/online'
+		},
+		{
+			name: '离线设备',
+			link: '/maps'
+		},
+		{
 			name: '地图模式',
 			link: '/maps'
 		},

@@ -13,10 +13,10 @@ class App extends React.Component {
 		return (
 			<BrowserRouter>
 				<div className={this.props.style}>
-					<div className="">
+					<section>
 						<Herder />
 						<Aside />
-					</div>
+					</section>
 					<main><Main /></main>
 					<footer></footer>
 				</div>

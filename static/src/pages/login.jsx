@@ -1,6 +1,7 @@
 import React from 'react';
 import {Link} from 'react-router-dom';
 import axios from 'axios';
+import { Cookies } from '@/component/utils';
 
 class Login extends React.Component {
 	constructor(props){
@@ -9,11 +10,7 @@ class Login extends React.Component {
 			username: '',
 			password: ''
 		};
-	}
-	componentDidMount() {
-		//this.setState({ username: '' });
-		// this.setState({ password: '' });
-	}
+	}	
 	changeName = (e) => {
 		this.setState({ username: e.target.value });
 	}
@@ -22,10 +19,16 @@ class Login extends React.Component {
 	}
 	handleLogin = () => {
 		const that = this;
-		const user = { name: this.state.username, password : this.state.password };
+		const user = { username: this.state.username, password : this.state.password };
 		axios.post('/ajax/Login', user).then(function(data){
-			console.log(data);
-			that.props.history.push('/');
+			const result = data.data;
+			if(result.result == 0){
+				Cookies.set('__pin', result.data.username, 1000*60*30);
+				Cookies.set('__token', result.token, 1000*60*30);
+				that.props.history.push('/');
+			}else{
+				that.props.history.push('/login');
+			}			
 		}).catch(function(error){
 			console.log(error);
 			that.props.history.push('/login');
@@ -37,7 +40,7 @@ class Login extends React.Component {
 				<div className="signin-header">
 					<div className="container text-center">
 						<section className="logo">
-							<a href="#/" className="">Square</a>
+							<a href="javascript:;" className="">Square</a>
 						</section>
 					</div>
 				</div>
@@ -79,8 +82,8 @@ class Login extends React.Component {
 									</fieldset>
 								</form>
 							<section>
-								<p className="text-center"><a href="#/pages/forgot">Forgot your password?</a></p>
-								<p className="text-center text-muted text-small">Don't have an account yet? <a href="#/pages/signup">Sign up</a></p>
+								<p className="text-center"><span>Forgot your password?</span></p>
+								<p className="text-center text-muted text-small">Don't have an account yet? <span>Sign up</span></p>
 							</section>
 						</div>
 					</div>

@@ -37,23 +37,19 @@ Aside.defaultProps = {
 	style: 'header',
 	menus: [
 		{
-			name: '在线设备',
-			link: '/online'
+			name: '全部设备',
+			link: '/device'
 		},
 		{
-			name: '离线设备',
-			link: '/maps'
+			name: '实时数据',
+			link: '/visual/0023558B2178'
 		},
+		{
+			name: '历史数据',
+			link: '/history/0023558B2178'
+		},		
 		{
 			name: '地图模式',
-			link: '/maps'
-		},
-		{
-			name: '信息反馈',
-			link: '/maps'
-		},
-		{
-			name: '监控中心',
 			link: '/maps'
 		},
 		{

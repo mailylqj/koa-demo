@@ -4,6 +4,7 @@ import Herder from '@/include/header.jsx';
 import Main from '@/include/main.jsx';
 import Aside from '@/include/aside.jsx';
 import { BrowserRouter } from 'react-router-dom';
+import { Cookies } from '@/component/utils';
 
 class App extends React.Component {
 	render() {
@@ -13,7 +14,7 @@ class App extends React.Component {
 		return (
 			<BrowserRouter>
 				<div className={this.props.style}>
-					<section>
+					<section id="login-view">
 						<Herder />
 						<Aside />
 					</section>

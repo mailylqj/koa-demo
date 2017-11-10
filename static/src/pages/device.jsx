@@ -1,17 +1,23 @@
 import React from 'react';
 import axios from 'axios';
 import {Link} from 'react-router-dom';
+import { Cookies } from '@/component/utils';
 
-class Online extends React.Component {
+class Device extends React.Component {
 	constructor(props) {
 		super(props);
 		this.state = {device : []};
 	}
 	componentDidMount(){
-		const that = this;
-		const user = { username: 'klzy' };
+		let that = this;
+		let user = { username: Cookies.get('__pin'), token: Cookies.get('__token') };
 		axios.post('/ajax/getDeviceList', user).then(function(data){
-			that.setState({ 'device': data.data });
+			let result = data.data;
+			if(result.result == 0){
+				that.setState({ 'device': result.data });
+			}else{
+				that.props.history.push('/login');
+			}			
 		});
 	}
 	render() {
@@ -54,12 +60,12 @@ class Online extends React.Component {
 	}
 }
 
-Online.propTypes = {
+Device.propTypes = {
 	style: React.PropTypes.string
 };
 
-Online.defaultProps = {
+Device.defaultProps = {
 	style: 'wapper'
 };
 
-export default Online;
+export default Device;

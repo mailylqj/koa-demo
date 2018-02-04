@@ -1,5 +1,6 @@
 import React from 'react';
 import axios from 'axios';
+import PropTypes from 'prop-types';
 import {Link} from 'react-router-dom';
 
 class Online extends React.Component {
@@ -55,7 +56,7 @@ class Online extends React.Component {
 }
 
 Online.propTypes = {
-	style: React.PropTypes.string
+	style: PropTypes.string
 };
 
 Online.defaultProps = {

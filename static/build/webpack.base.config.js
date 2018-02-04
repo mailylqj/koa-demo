@@ -1,10 +1,7 @@
 const path = require('path');
-const webpack = require('webpack');
 const glob = require('glob');
+const webpack = require('webpack');
 const ExtractTextPlugin = require('extract-text-webpack-plugin');
-const CommonsChunkPlugin = new webpack.optimize.CommonsChunkPlugin('common/common');
-/* var webpack = require('gulp-webpack');
-var node_mudules_dir = path.resolve(__dirname, 'node_mudules');*/
 
 const entrys = {};
 const files = glob.sync('static/src/apps/*.js');
@@ -13,10 +10,8 @@ files.forEach((file) => {
 	const name = file.replace(/static\/src\/(apps\/[^\*\@\&]+).js/ig, '$1');
 	entrys[name] = path.resolve(file);
 });
-entrys['common/vendor'] = ['react', 'react-dom'];
 
-module.exports = {
-	plugins: [CommonsChunkPlugin, new ExtractTextPlugin('common/style.css')],
+module.exports = {	
 	entry: entrys,
 	output: {
 		path: path.join(__dirname, '../dist'),
@@ -40,41 +35,54 @@ module.exports = {
 		historyApiFallback: true
 	},
 	module: {
-		rules: [
-			{
-				test: /\.(js|jsx)$/,
-				exclude: /node_modules/,
-				enforce: 'pre',
-				loader: 'eslint-loader'
-			},
-			{
-				test: /\.(es6|js|jsx)$/,
-				exclude: /node_mudules/,
+		rules: [{
+			test: /\.(es6|js|jsx)$/,
+			exclude: /(node_modules|bower_components)/,
+			use: {
 				loader: 'babel-loader',
-				query: {// 没加stage-1，无法使用es6的箭头函数
-					presets: ['es2015', 'react', 'stage-1'],
-					plugins: ['add-module-exports']
+				options: {
+					presets: [
+						['@babel/preset-env', {
+							targets: {
+								'browsers': ['> 5%', 'last 2 versions']
+							},
+							debug: true,
+							useBuiltIns: 'usage'
+						}],
+						['@babel/preset-react'],
+						['@babel/preset-stage-0']
+					],
+					plugins: [
+						['add-module-exports'] // 支持import对象的某个属性
+					]
 				}
-			},
-			{
-				test: /\.css$/,
-				exclude: /node_mudules/,
-				loader: ExtractTextPlugin.extract({
-					use: 'css-loader'
-				})
-			},
-			{
-				test: /\.(scss|sass)$/,
-				loader: ExtractTextPlugin.extract({
-					use: 'style-loader!css-loader!sass-loader'
-				})
-			},
-			{
-				test: /\.less$/,
-				loader: ExtractTextPlugin.extract({
-					use: 'style-loader!css-loader!less-loader'
-				})
 			}
-		]
-	}
+		},{
+			test: /\.css$/,
+			use: ExtractTextPlugin.extract({
+				use: [ 'css-loader' ]
+			})
+		},{
+			test: /\.(scss|sass)$/,
+			use: ExtractTextPlugin.extract({
+				use: [ 'css-loader', 'sass-loader' ]
+			})
+		},{
+			test: /\.less$/,
+			use: ExtractTextPlugin.extract({
+				use: [ 'css-loader', 'less-loader' ]
+			})
+		}]
+	},
+	plugins: [
+		new webpack.optimize.ModuleConcatenationPlugin(),
+		new webpack.optimize.CommonsChunkPlugin({ // CommonsChunkPlugin 必须设置 allChunks
+			name: 'vendor/vendor',
+			minChunks: 2
+		}), 
+		new ExtractTextPlugin({
+			filename: 'vendor/style.css',
+			allChunks: true
+		})
+	]
 };

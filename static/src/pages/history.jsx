@@ -1,37 +1,96 @@
 import React from 'react';
 import axios from 'axios';
+import PropTypes from 'prop-types';
 import '@/component/prototype';
 import { Cookies } from '@/component/utils';
+import Charts from '@/include/chart.jsx';
+import { curve } from '@/component/chatOptions';
+import DatePicker from 'react-datepicker';
+import update from 'immutability-helper';
+import { toast } from 'react-toastify';
+import moment from 'moment';
+import 'react-datepicker/dist/react-datepicker.css';
 
 class History extends React.Component {
 	constructor(props) {
 		super(props);
 		this.state = {
-			keyData: [],
-			hisData: []
-		}
+			selectedIds: [],
+			control: {},
+			ctrlData: {},
+			startTime: moment(),
+			endTime: moment()
+		};
 	}
 	componentDidMount(){
-		const param = {
-			endTime: new Date().getTime(),
-			startTime: new Date().getTime() - 60000,
-			uid: this.props.match.params.id,
+		let param = {
+			device_id: this.props.match.params.id,
 			token: Cookies.get('__token')
 		};
-		const that = this;
-		axios.post('/ajax/readModData', param).then(function(data){			
+		let that = this;
+		axios.post('/ajax/getDataList', param).then(function(data){
 			let result = data.data;
 			if(result.result == 0){
-				for (var i = 0, ii = result.data.data.length; i < ii; i++) {
-					result.data.data[i]['dateTime'] = new Date(result.data.data[i].time).Format('yyyy-MM-dd HH:mm:ss');
-				}
-				that.setState({ 'hisData': result.data.data });
-				that.setState({ 'keyData': that.state.hisData[0].value_list});
+				that.setState({control: result.data, endTime: moment()});
 			}else{
+				toast.error(result.message);
+			}
+		});		
+	}	
+	pickStartTime = date => {
+		this.setState({startTime: date});
+	}
+	pickEndTime = date => {
+		this.setState({endTime: date});
+	}
+	toggleCheck = (e) => {
+		if(e.target.checked){
+			this.setState( 
+				update(this.state, {
+					selectedIds: { $push: [e.target.value] }
+				})
+			);
+		}else{
+			let index = this.state.selectedIds.indexOf(e.target.value);
+			this.setState( 
+				update(this.state, {
+					selectedIds: { $unset: [index] }
+				})
+			);
+		}
+	}
+	getHistory = () => {
+		let param = {
+			endTime: 1516085777000, //this.state.endTime.valueOf(),
+			startTime: 1516085277000, //this.state.startTime.valueOf(),
+			uid: this.props.match.params.id,
+			idList: this.state.selectedIds,
+			token: Cookies.get('__token')
+		};
+		
+		let that = this;
+		axios.post('/ajax/readModData', param).then(function(data){
+			let result = data.data;
+			if(result.result == 0){
+				Object.keys(result.data).map(key => {
+					let item = result.data[key];
+					result.data[key]['option'] = {width: '100%', height:400, title: key};
+					let chart =  JSON.parse(JSON.stringify(curve)); // 深度拷贝对象
+					chart['chart'] = {zoomType: 'x'};					
+					chart['series'] = [{
+						name: '设备控件历史数据折线图',
+						data: item.data || [],
+						pointStart: item.startTime, 
+						pointInterval: item.step * 1000
+					}];
+					result.data[key]['chart'] = chart;
+				});
+				that.setState({ctrlData: result.data});
+			}else if([-2,-5,-14].indexOf(result.result) > -1) {
 				that.props.history.push('/login');
-			}	
-		}).catch(function(error){
-			console.log(error);
+			}else{
+				toast.error(result.message);
+			}
 		});
 	}
 	render() {
@@ -45,45 +104,42 @@ class History extends React.Component {
 						<div className="panel-heading">
 							<span>设备历史数据</span>
 						</div>
-						<table className="table">
-							<thead>
-								<tr>
-									<th>时间</th>
-									{this.state.keyData.map((item, index) => {
-										return <th key={index}>{item.name}</th>;
+						<div className="row">
+							<div className="col-md-2">
+								<ul className="control-list">
+									{Object.keys(this.state.control).map(key => {
+										let item = this.state.control[key];
+										return (
+											<li className="control" key={key}>
+												<label className="ui-checkbox">
+													<input name="control" type="checkbox" value={key} onChange={this.toggleCheck}/>
+													<span>{item.name}</span>
+												</label>
+											</li>
+										);
 									})}
-								</tr>	
-							</thead>
-							<tbody>
-								{this.state.hisData.map((item, index) => {
+								</ul>
+							</div>
+							<div className="col-md-10">
+								<div className="clearfix data-fillter">
+									<div className="col-md-5">
+										<DatePicker className="form-control" dateFormat="YYYY-MM-DD hh:mm" timeIntervals={5} showTimeSelect placeholderText="开始时间" selected={this.state.startTime} onChange={this.pickStartTime}></DatePicker>
+									</div>
+									<div className="col-md-5">
+										<DatePicker className="form-control" dateFormat="YYYY-MM-DD hh:mm" timeIntervals={5} showTimeSelect placeholderText="结束时间" selected={this.state.endTime} onChange={this.pickEndTime}></DatePicker>
+									</div>
+									<div className="col-md-2">
+										<button type="submit" className="btn btn-w-md btn-primary" onClick={this.getHistory}>查询</button>
+									</div>
+								</div>
+								{Object.keys(this.state.ctrlData).map(key => {
+									let item = this.state.ctrlData[key];
 									return (
-										<tr key={index}>
-											<td>{item.dateTime}</td>
-											{item.value_list.map((val, index) => {
-												return <td key={index}>{val.value}</td>;
-											})}
-										</tr>
+										<Charts key={key} style={{width: '100%', height: 400}} type="chart" data={item.option} container={'chart' + key} options={item.chart}/>
 									);
 								})}
-							</tbody>
-						</table>
-						<ul className="pagination-sm pagination">
-							<li>
-								<a>First</a>
-							</li>
-							<li>
-								<a>Previous</a>
-							</li>
-							<li>
-								<a>1</a>
-							</li>
-							<li>
-								<a>Next</a>
-							</li>
-							<li>
-								<a>Last</a>
-							</li>
-						</ul>
+							</div>
+						</div>						
 					</div>
 				</div>
 			</div>
@@ -92,7 +148,7 @@ class History extends React.Component {
 }
 
 History.propTypes = {
-	style: React.PropTypes.string
+	style: PropTypes.string
 };
 
 History.defaultProps = {

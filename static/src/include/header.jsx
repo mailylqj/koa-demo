@@ -1,4 +1,5 @@
 import React from 'react';
+import PropTypes from 'prop-types';
 import {Link} from 'react-router-dom';
 import { Cookies } from '@/component/utils';
 
@@ -6,17 +7,27 @@ class Header extends React.Component {
 	constructor(props) {
 		super(props);
 		this.state = {
+			open: false,
+			show: false,
 			openClass: '',
 			showClass: ''
 		};
 	}
 	toggleDropdown = () => {
-		this.setState({open: !this.state.open});
-		this.setState({openClass: this.state.open ? 'open' : ''});
+		let temp = !this.state.open;
+		this.setState({open: temp, openClass: temp ? 'open' : ''});
 	}
 	toggleLang = () => {
-		this.setState({show: !this.state.show});
-		this.setState({showClass: this.state.show ? 'open' : ''});
+		let temp = !this.state.show;
+		this.setState({show: temp, showClass: temp ? 'open' : ''});
+	}
+	toggleSide = () => {
+		let bodyClass = document.querySelector('body').className || '';
+		if(/nav-min/.test(bodyClass)){
+			document.querySelector('body').className = bodyClass.replace(/nav-min/, '');
+		}else{
+			document.querySelector('body').className = bodyClass + ' nav-min';
+		}
 	}
 	render() {
 		if (!this.props.style) {
@@ -28,19 +39,19 @@ class Header extends React.Component {
 				<div className="logo"><a><span>Square</span></a></div>
 				<div className="top-nav clearfix">
 					<ul className="nav-left list-unstyled">
-						<li><a className="toggle-min"><i className="fa fa-bars"></i></a></li>
+						<li><a href="javascript:;" className="toggle-min" onClick={this.toggleSide}><i className="fa fa-bars"></i></a></li>
 						<li className={'dropdown text-normal nav-profile ' + this.state.openClass}>
 							<a href="javascript:;" className="dropdown-toggle" onClick={this.toggleDropdown}>
 								<img src="images/g1.jpg" alt="" className="img-circle img30_30"/>
 								<span className="hidden-xs">
-									<span data-i18n="Lisa Doe">{username}</span>
+									<span>{username}</span>
 								</span>
 							</a>
 							<ul className="dropdown-menu dropdown-dark with-arrow">
 								<li>
 									<a href="/login">
 										<i className="fa fa-sign-out"></i>
-										<span data-i18n="Log Out">Log Out</span>
+										<span>Log Out</span>
 									</a>
 								</li>
 							</ul>
@@ -70,7 +81,7 @@ class Header extends React.Component {
 }
 
 Header.propTypes = {
-	style: React.PropTypes.string
+	style: PropTypes.string
 };
 
 Header.defaultProps = {

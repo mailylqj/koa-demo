@@ -1,11 +1,31 @@
 import React from 'react';
-// import Main from '@/include/main.jsx';
+import axios from 'axios';
+import { Cookies } from '@/component/utils';
+import { toast } from 'react-toastify';
+
 class Maps extends React.Component {
 	componentDidMount(){
+		let that = this;
+		let user = { username: Cookies.get('__pin'), token: Cookies.get('__token') };
 		let map = new AMap.Map('gaodeMap', {
 			center:[117.000923,36.675807],
 			zoom: 6
 		});
+		axios.post('/ajax/getDeviceList', user).then(function(data){
+			let result = data.data;
+			if(result.result == 0){
+				for (var i = 0, ii = result.data.length; i < ii; i++) {					
+					let marker = new AMap.Marker({
+						position: [result.data[i].longitude, result.data[i].latitude],
+						title: result.data[i].deviceName,
+						map: map
+					});
+				}
+			}else{
+				toast.error(result.message);
+			}
+		});
+		
 	}
 	render() {
 		return (

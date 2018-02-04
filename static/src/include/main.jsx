@@ -1,11 +1,23 @@
 import React from 'react';
-
+import axios from 'axios';
+import PropTypes from 'prop-types';
 import Index from '@/pages/index.jsx';
 import Login from '@/pages/login.jsx';
 import Device from '@/pages/device.jsx';
 import History from '@/pages/history.jsx';
 import Visual from '@/pages/visual.jsx';
+import Virtual from '@/pages/virtual.jsx';
 import Maps from '@/pages/maps.jsx';
+import User from '@/pages/user.jsx';
+import Update from '@/pages/update.jsx';
+import AddUser from '@/pages/adduser.jsx';
+import AllDevice from '@/pages/alldevice.jsx';
+import EditDevice from '@/pages/editdevice.jsx';
+import AddDevice from '@/pages/adddevice.jsx';
+import EditVR from '@/pages/editvr.jsx';
+import Company from '@/pages/company.jsx';
+import Audit from '@/pages/audit.jsx';
+import Imei from '@/pages/imei.jsx';
 
 import Test from '@/pages/test.jsx';
 
@@ -15,32 +27,30 @@ import { Cookies } from '@/component/utils';
 class Main extends React.Component {
 	constructor(props) {
 		super(props);
-		this.state = {
-			count: 1
-		};
 	}
 	static propTypes = {
-		location: React.PropTypes.object.isRequired
-	}
-	componentDidMount() {
-		const pin = Cookies.get('_pin');
-		if(!pin){
-			//this.props.history.push('/login');
-		} else {
-			//this.props.history.push('/');
-		}
-	}
+		location: PropTypes.object.isRequired
+	}	
 	componentDidUpdate(prevProps) {
 		if (this.props.location !== prevProps.location) {
 			this.onRouteChanged();
 		}
 	}
 	onRouteChanged() {
-		let menu = document.getElementById('login-view');
+		let that = this;
+		let menu = document.querySelector('#login-view');
 		if(this.props.location.pathname == '/login'){
 			menu.style.display = 'none';
 		}else{
 			menu.style.display = 'block';
+			axios.post('/ajax/Token', {token: Cookies.get('__token')}).then(function(data){
+				let result = data.data;
+				Cookies.set('__token', result.token, 1000*60*30);
+				if(result.result !== 0){
+					Cookies.set('__pin', null);
+					that.props.history.push('/login');
+				}
+			});
 		}
 	}
 	render() {
@@ -48,10 +58,21 @@ class Main extends React.Component {
 			<Switch>
 				<Route exact path="/" component={Index}/>
 				<Route path="/login" component={Login}/>
-				<Route path="/device" component={Device}/>
+				<Route path="/alldevice" component={AllDevice}/>
+				<Route exact path="/device" component={Device}/>
+				<Route path="/device/:id" component={EditDevice}/>
+				<Route path="/adddevice" component={AddDevice}/>
+				<Route path="/editvr/:id" component={EditVR}/>
 				<Route path="/maps" component={Maps}/>
 				<Route path="/history/:id" component={History}/>
 				<Route path="/visual/:id" component={Visual}/>
+				<Route path="/virtual/:id" component={Virtual}/>
+				<Route exact path="/user" component={User}/>
+				<Route path="/adduser" component={AddUser}/>
+				<Route path="/user/:id" component={Update}/>				
+				<Route path="/company" component={Company}/>
+				<Route path="/audit" component={Audit}/>
+				<Route path="/imei" component={Imei}/>
 				<Route path="/test" component={Test}/>
 			</Switch>
 		);

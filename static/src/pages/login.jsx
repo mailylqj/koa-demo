@@ -2,6 +2,7 @@ import React from 'react';
 import {Link} from 'react-router-dom';
 import axios from 'axios';
 import { Cookies } from '@/component/utils';
+import { toast } from 'react-toastify';
 
 class Login extends React.Component {
 	constructor(props){
@@ -10,6 +11,11 @@ class Login extends React.Component {
 			username: '',
 			password: ''
 		};
+	}
+	componentDidMount() {
+		let menu = document.querySelector('#login-view');
+		menu.style.display = 'none';
+		Cookies.set('__pin', null);
 	}	
 	changeName = (e) => {
 		this.setState({ username: e.target.value });
@@ -18,20 +24,19 @@ class Login extends React.Component {
 		this.setState({ password: e.target.value });
 	}
 	handleLogin = () => {
-		const that = this;
-		const user = { username: this.state.username, password : this.state.password };
+		let that = this;
+		let user = { username: this.state.username, password : this.state.password };
 		axios.post('/ajax/Login', user).then(function(data){
-			const result = data.data;
+			let result = data.data;
 			if(result.result == 0){
 				Cookies.set('__pin', result.data.username, 1000*60*30);
-				Cookies.set('__token', result.token, 1000*60*30);
+				Cookies.set('__token', result.token, 1000*60*30);				
 				that.props.history.push('/');
 			}else{
-				that.props.history.push('/login');
+				toast.error(result.message);
 			}			
 		}).catch(function(error){
-			console.log(error);
-			that.props.history.push('/login');
+			toast.error(error);
 		});
 	}
 	render() {
@@ -46,41 +51,41 @@ class Login extends React.Component {
 				</div>
 				<div className="main-body">
 					<div className="container">
-							<div className="form-container">
-								<section className="row signin-social text-center">
-									<a href="javascript:;" className="btn-icon btn-icon-sm bg-twitter"><i className="fa fa-twitter"></i></a>
-									<div className="space"></div>
-									<a href="javascript:;" className="btn-icon btn-icon-sm bg-facebook"><i className="fa fa-facebook"></i></a>
-									<div className="space"></div>
-									<a href="javascript:;" className="btn-icon btn-icon-sm bg-google-plus"><i className="fa fa-google-plus"></i></a>
-								</section>
+						<div className="form-container">
+							<section className="row signin-social text-center">
+								<a href="javascript:;" className="btn-icon btn-icon-sm bg-twitter"><i className="fa fa-twitter"></i></a>
+								<div className="space"></div>
+								<a href="javascript:;" className="btn-icon btn-icon-sm bg-facebook"><i className="fa fa-facebook"></i></a>
+								<div className="space"></div>
+								<a href="javascript:;" className="btn-icon btn-icon-sm bg-google-plus"><i className="fa fa-google-plus"></i></a>
+							</section>
 
-								<span className="line-thru">OR</span>
+							<span className="line-thru">OR</span>
 
-								<form className="form-horizontal">
-									<fieldset>
-										<div className="form-group">
-											<div className="input-group input-group-lg">
-												<span className="input-group-addon">
-													<span className="glyphicon glyphicon-envelope"></span>
-												</span>
-												<input type="email" value={this.state.username} onChange={this.changeName} className="form-control" placeholder="Email"/>
-											</div>
+							<div className="form-horizontal">
+								<fieldset>
+									<div className="form-group">
+										<div className="input-group input-group-lg">
+											<span className="input-group-addon">
+												<span className="glyphicon glyphicon-envelope"></span>
+											</span>
+											<input type="email" value={this.state.username} onChange={this.changeName} className="form-control" placeholder="Email"/>
 										</div>
-										<div className="form-group">
-											<div className="input-group input-group-lg">
-												<span className="input-group-addon">
-													<span className="glyphicon glyphicon-lock"></span>
-												</span>
-												<input type="password" value={this.state.password} onChange={this.changePasd} className="form-control" placeholder="password"/>
-											</div>
+									</div>
+									<div className="form-group">
+										<div className="input-group input-group-lg">
+											<span className="input-group-addon">
+												<span className="glyphicon glyphicon-lock"></span>
+											</span>
+											<input type="password" value={this.state.password} onChange={this.changePasd} className="form-control" placeholder="password"/>
 										</div>
-										<div className="form-group"></div>
-										<div className="form-group">
-											<a href="javascript:;" onClick={this.handleLogin} className="btn btn-primary btn-lg btn-block">Log in</a>
-										</div>
-									</fieldset>
-								</form>
+									</div>
+									<div className="form-group"></div>
+									<div className="form-group">
+										<a href="javascript:;" onClick={this.handleLogin} className="btn btn-primary btn-lg btn-block">Log in</a>
+									</div>
+								</fieldset>
+							</div>
 							<section>
 								<p className="text-center"><span>Forgot your password?</span></p>
 								<p className="text-center text-muted text-small">Don't have an account yet? <span>Sign up</span></p>

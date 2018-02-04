@@ -19,8 +19,12 @@
     "plugins": [
         "react"
     ],
-    "ecmaFeatures": {
-       "jsx": true
+    "parserOptions": { 
+        "ecmaVersion": 8,
+        "sourceType": "module",
+        "ecmaFeatures": {
+            "jsx": true
+        }
     },
     "extends": "eslint:recommended",
     "rules": {

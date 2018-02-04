@@ -1,11 +1,20 @@
 import React from 'react';
+import axios from 'axios';
 import PropTypes from 'prop-types';
-import Charts from '@/include/chart.jsx';
+import Container from '@/include/virtual/container.jsx';
+
 import { Cookies } from '@/component/utils';
 
-class Index extends React.Component {
+class EditVR extends React.Component {
 	constructor(props) {
 		super(props);
+	}
+	componentDidMount(){
+		let that = this;
+		let param = {device_id: this.props.match.params.id, token: Cookies.get('__token') };
+		axios.post('/ajax/layoutSelectByDeviceID', param).then(function(data){
+			let result = data.data;
+		});
 	}
 	render() {
 		if (!this.props.style) {
@@ -21,8 +30,7 @@ class Index extends React.Component {
 							<span>index</span>
 						</div>
 						<div className="panel-body">
-							<p>欢迎：{username}</p>
-							<p>现在是：{date}</p>
+							<Container deviceid={this.props.match.params.id}/>
 						</div>
 					</div>
 				</div>
@@ -31,12 +39,12 @@ class Index extends React.Component {
 	}
 }
 
-Index.propTypes = {
+EditVR.propTypes = {
 	style: PropTypes.string
 };
 
-Index.defaultProps = {
+EditVR.defaultProps = {
 	style: 'wapper'
 };
 
-export default Index;
+export default EditVR;

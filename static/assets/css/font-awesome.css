@@ -1564,3 +1564,82 @@
 .fa-bomb:before {
   content: "\f1e2";
 }
+
+.form-group .react-datepicker-popper{
+  z-index: 999;
+}
+
+.layout-temp{
+  border: 1px dashed gray;
+  background: #f6f6f6;
+  padding: 5px 10px;
+  margin: 0 10px 10px 0;
+  float: left;
+  cursor: pointer;
+}
+
+.layout-temp:hover{
+  border-color: rgb(223, 74, 50);
+  background: rgb(223, 74, 50);
+  color: #fff; 
+}
+
+.modal-dialog.widget-config{
+  width: 920px;
+}
+
+.control-list{
+  list-style: none;
+  padding: 60px 0 10px 10px;
+} 
+.control-list .control{
+  display: block;
+  padding: 0.6em 0.8em;
+  background: #fff;
+  color: #333;
+  border: 1px solid #52abd2;
+  margin-bottom: 10px; 
+}
+
+.control-list .control:hover{
+  background: #52abd2;
+  color:#fff;
+}
+
+.control-list .active .control{
+  background: rgba(49,192,190,1);
+  color:#fff;
+}
+
+.control-list .control .ui-checkbox{
+  margin-bottom: 0;
+}
+
+.control-list .control:hover .ui-checkbox span:before{
+  border-color: #fff;
+}
+
+.data-fillter{
+  padding: 10px 0;
+  border-bottom: 1px solid #ddd;
+}
+
+/*chrome滚动条*/
+::-webkit-scrollbar-track-piece {
+  background-color: $colorBorder;
+}
+
+::-webkit-scrollbar {
+  width: 5px;
+  height: 5px;
+}
+
+::-webkit-scrollbar-thumb {
+  background-color: $colorLight;
+}
+
+/*时间选择器*/
+.react-datepicker .react-datepicker__time-list{
+  padding: 0!important;
+}
+

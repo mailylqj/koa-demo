@@ -21,7 +21,7 @@ export default {
 					Cookie += '; path=' + path ;
 				}
 				if (domain) {
-					Cookie += '; domain=' + domain ;
+					Cookie += '; domain=' + domain;
 				}
 				if (secure) {
 					Cookie += '; secure' ;

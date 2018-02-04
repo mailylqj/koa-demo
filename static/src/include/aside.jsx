@@ -1,4 +1,5 @@
 import React from 'react';
+import PropTypes from 'prop-types';
 import {Link} from 'react-router-dom';
 
 class Aside extends React.Component {
@@ -13,13 +14,15 @@ class Aside extends React.Component {
 	render() {
 		if (!this.props.style) {
 			return null;
-		}		
+		}
+		let path = location.pathname;
 		return (
 			<div id="nav-container">				
 				<div id="nav-wrapper">
 					<ul className="list" id="nav">
 					{this.props.menus.map(function(item, index){
-						return <li key={index}><Link to={item.link} title={item.name}>{item.name}</Link></li>;
+						let reg = new RegExp(item.link);
+						return <li className={reg.test(path) ? 'active' : ''} key={index}><Link to={item.link} title={item.name}>{item.name}</Link></li>;
 					})}
 					</ul>
 				</div>
@@ -29,34 +32,40 @@ class Aside extends React.Component {
 }
 
 Aside.propTypes = {
-	style: React.PropTypes.string,
-	menus: React.PropTypes.array
+	style: PropTypes.string,
+	menus: PropTypes.array
 };
 
 Aside.defaultProps = {
 	style: 'header',
-	menus: [
-		{
-			name: '全部设备',
-			link: '/device'
-		},
-		{
-			name: '实时数据',
-			link: '/visual/0023558B2178'
-		},
-		{
-			name: '历史数据',
-			link: '/history/0023558B2178'
-		},		
-		{
-			name: '地图模式',
-			link: '/maps'
-		},
-		{
-			name: '管理中心',
-			link: '/maps'
-		}
-	]
+	menus: [{
+		name: '我的设备',
+		link: '/device'
+	},{
+		name: '实时数据',
+		link: '/virtual/0023558B2178'
+	},{
+		name: '历史数据',
+		link: '/history/0023558B2178'
+	},{
+		name: '地图模式',
+		link: '/maps'
+	},{
+		name: '公司管理',
+		link: '/company'
+	},{
+		name: '用户中心',
+		link: '/user'
+	},{
+		name: '设备管理',
+		link: '/alldevice'
+	},{
+		name: 'IMEI管理',
+		link: '/imei'
+	},{
+		name: '设备审核',
+		link: '/audit'
+	}]
 };
 
 export default Aside;

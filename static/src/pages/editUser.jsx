@@ -5,7 +5,7 @@ import {Link} from 'react-router-dom';
 import { toast } from 'react-toastify';
 import { Cookies } from '@/component/utils';
 
-class Update extends React.Component {
+class EditUser extends React.Component {
 	constructor(props) {
 		super(props);
 		this.state = {user : {}, proCompany: [], useCompany: [], levelList: [], useDevice: []};
@@ -65,9 +65,9 @@ class Update extends React.Component {
 		this.setState({ user: Object.assign({}, this.state.user, {pro_company_id: parseInt(e.target.value)}) });
 		axios.post('/ajax/useCompanySelectByProCompanyID', param).then(function(data){
 			let re = data.data;
-			if(re.result == 0){
+			if(re.result == 0){				
 				that.setState({ 'useCompany': re.data });
-			}else if([-2,-5,-14].indexOf(re.result) > -1) {
+			}else if([-2,-14].indexOf(re.result) > -1) {
 				that.props.history.push('/login');
 			}else{
 				toast.error(re.message);
@@ -89,7 +89,7 @@ class Update extends React.Component {
 			let result = data.data;
 			if(result.result == 0){
 				toast.success(result.message);
-			}else if([-2,-5,-14].indexOf(result.result) > -1) {
+			}else if([-2,-14].indexOf(result.result) > -1) {
 				that.props.history.push('/login');
 			}else{
 				toast.error(result.message);
@@ -111,7 +111,7 @@ class Update extends React.Component {
 			let result = data.data;
 			if(result.result == 0){
 				toast.success(result.message);
-			}else if([-2,-5,-14].indexOf(result.result) > -1) {
+			}else if([-2,-14].indexOf(result.result) > -1) {
 				that.props.history.push('/login');
 			}else{
 				toast.error(result.message);
@@ -125,7 +125,7 @@ class Update extends React.Component {
 			let result = data.data;
 			if(result.result == 0){
 				that.setState({ 'user': result.data });
-			}else if([-2,-5,-14].indexOf(result.result) > -1) {
+			}else if([-2,-14].indexOf(result.result) > -1) {
 				that.props.history.push('/login');
 			}else{
 				toast.error(result.message);
@@ -161,7 +161,7 @@ class Update extends React.Component {
 											<div className="col-md-10"><input type="text" className="form-control" value={this.state.user.username} onChange={this.changeName}/></div>
 										</div>
 										<div className="form-group">
-											<label className="col-md-2">公司名字</label>
+											<label className="col-md-2">生产公司</label>
 											<div className="col-md-10">
 												<span className="ui-select" style={{display: 'block', margin: '0'}}>
 													<select style={{width: '100%'}} id="proCompanyId" value={this.state.user.pro_company_id} onChange={this.selectProCompany}>
@@ -176,16 +176,17 @@ class Update extends React.Component {
 											</div>
 										</div>
 										<div className="form-group">
-											<label className="col-md-2">公司名字</label>
+											<label className="col-md-2">使用公司</label>
 											<div className="col-md-10">
 												<span className="ui-select" style={{display: 'block', margin: '0'}}>
 													<select style={{width: '100%'}} id="useCompanyId" value={this.state.user.use_company_id} onChange={this.selectUseCompany}>
-													{Object.keys(this.state.useCompany).map(key => {
-														let item = this.state.useCompany[key];
-														return (
-															<option key={key} value={item.id}>{item.use_company}</option>
-														);
-													})}
+														<option value="0">--请选择--</option>
+														{Object.keys(this.state.useCompany).map(key => {
+															let item = this.state.useCompany[key];
+															return (
+																<option key={key} value={item.id}>{item.use_company}</option>
+															);
+														})}
 													</select>
 												</span>
 											</div>
@@ -249,8 +250,8 @@ class Update extends React.Component {
 	}
 }
 
-Update.defaultProps = {
+EditUser.defaultProps = {
 	style: 'wapper'
 };
 
-export default Update;
+export default EditUser;

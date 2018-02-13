@@ -1,6 +1,5 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import Charts from '@/include/chart.jsx';
 import { Cookies } from '@/component/utils';
 
 class Index extends React.Component {

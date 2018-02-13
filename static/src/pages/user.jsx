@@ -33,7 +33,7 @@ class User extends React.Component {
 			let result = data.data;
 			if(result.result == 0){
 				that.setState({isOpen: false});
-			}else if([-2,-5,-14].indexOf(result.result) > -1) {
+			}else if([-2,-14].indexOf(result.result) > -1) {
 				that.props.history.push('/login');
 			}else{
 				toast.error(result.message);
@@ -58,7 +58,7 @@ class User extends React.Component {
 			let result = data.data;
 			if(result.result == 0){
 				toast.success(result.message);
-			}else if([-2,-5,-14].indexOf(result.result) > -1) {
+			}else if([-2,-14].indexOf(result.result) > -1) {
 				that.props.history.push('/login');
 			}else{
 				toast.error(result.message);

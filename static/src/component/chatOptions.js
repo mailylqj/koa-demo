@@ -1,3 +1,4 @@
+import moment from 'moment';
 export default {
 	curve: {
 		exporting:{
@@ -5,7 +6,7 @@ export default {
 		},
 		credits: {
 			enabled: false
-		},
+		},		
 		xAxis: {
 			type: 'datetime',
 			dateTimeLabelFormats: {
@@ -21,8 +22,8 @@ export default {
 		},
 		series: [{
 			name: '折线图',
-			data: [29.9, 71.5, 106.4],
-			pointStart: new Date().getTime(),
+			data: [null, null, null, null, null, null, null, null, null, null, null, null],
+			pointStart: moment().valueOf(),
 			pointInterval: 2 * 1000
 		}]
 	},
@@ -35,6 +36,9 @@ export default {
 		},
 		exporting:{
 			enabled:false
+		},
+		credits: {
+			enabled: false
 		},
 		xAxis: {
 			crosshair: true

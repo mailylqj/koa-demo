@@ -75,7 +75,7 @@ class EditDevice extends React.Component {
 			let re = data.data;
 			if(re.result == 0){
 				that.setState({ 'useCompany': re.data });
-			}else if([-2,-5,-14].indexOf(re.result) > -1) {
+			}else if([-2,-14].indexOf(re.result) > -1) {
 				that.props.history.push('/login');
 			}else{
 				toast.error(re.message);
@@ -137,7 +137,7 @@ class EditDevice extends React.Component {
 			let result = data.data;
 			if(result.result == 0){
 				toast.success(result.message);
-			}else if([-2,-5,-14].indexOf(result.result) > -1) {
+			}else if([-2,-14].indexOf(result.result) > -1) {
 				that.props.history.push('/login');
 			}else{
 				toast.error(result.message);
@@ -159,7 +159,7 @@ class EditDevice extends React.Component {
 			let result = data.data;
 			if(result.result == 0){
 				toast.success(result.message);
-			}else if([-2,-5,-14].indexOf(result.result) > -1) {
+			}else if([-2,-14].indexOf(result.result) > -1) {
 				that.props.history.push('/login');
 			}else{
 				toast.error(result.message);
@@ -254,12 +254,13 @@ class EditDevice extends React.Component {
 											<div className="col-md-9">
 												<span className="ui-select" style={{display: 'block', margin: '0'}}>
 													<select style={{width: '100%'}} id="useCompanyId" value={this.state.device.use_company_id} onChange={this.selectUseCompany}>
-													{Object.keys(this.state.useCompany).map(key => {
-														let item = this.state.useCompany[key];
-														return (
-															<option key={key} value={item.id}>{item.use_company}</option>
-														);
-													})}
+														<option value="0">--请选择--</option>
+														{Object.keys(this.state.useCompany).map(key => {
+															let item = this.state.useCompany[key];
+															return (
+																<option key={key} value={item.id}>{item.use_company}</option>
+															);
+														})}
 													</select>
 												</span>
 											</div>

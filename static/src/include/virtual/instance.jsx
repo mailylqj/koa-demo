@@ -66,7 +66,7 @@ export default class Instance extends Component {
 		case 'column':
 		case 'voltage':{
 			let chart = JSON.parse(JSON.stringify(Options[type]));
-			return(<Charts type="chart" data={data} container={'chart' + id} options={chart}/>);
+			return(<Charts style={{height: data.height ? data.height : 150, width: data.width ? data.width : 200}} type="chart" data={data} container={'chart' + id} options={chart}/>);
 		}
 		default: {
 			return(<div style={{padding: '0.5rem 1rem'}}>{data.title}</div>);

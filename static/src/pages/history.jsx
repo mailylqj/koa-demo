@@ -61,8 +61,8 @@ class History extends React.Component {
 	}
 	getHistory = () => {
 		let param = {
-			endTime: 1516085777000, //this.state.endTime.valueOf(),
-			startTime: 1516085277000, //this.state.startTime.valueOf(),
+			endTime: this.state.endTime.valueOf(),
+			startTime: this.state.startTime.valueOf(),
 			uid: this.props.match.params.id,
 			idList: this.state.selectedIds,
 			token: Cookies.get('__token')
@@ -86,11 +86,33 @@ class History extends React.Component {
 					result.data[key]['chart'] = chart;
 				});
 				that.setState({ctrlData: result.data});
-			}else if([-2,-5,-14].indexOf(result.result) > -1) {
+			}else if([-2,-14].indexOf(result.result) > -1) {
 				that.props.history.push('/login');
 			}else{
 				toast.error(result.message);
 			}
+		});
+	}
+	changeValue = e => {
+		this.setState({cmder: e.target.value});
+	}
+	sendControl = () => {
+		let param = {
+			value: this.state.cmder,			
+			id: this.state.selectedIds[0],
+			device_id: this.props.match.params.id,
+			token: Cookies.get('__token')
+		};
+		let that = this;
+		axios.post('/ajax/control', param).then(function(data){
+			let result = data.data;
+			if(result.result == 0){
+				toast.success(result.message);
+			}else{
+				that.props.history.push('/login');
+			}	
+		}).catch(function(error){
+			console.log(error);
 		});
 	}
 	render() {
@@ -130,7 +152,9 @@ class History extends React.Component {
 									</div>
 									<div className="col-md-2">
 										<button type="submit" className="btn btn-w-md btn-primary" onClick={this.getHistory}>查询</button>
-									</div>
+									</div>								
+									<div className="col-md-10" style={{paddingTop: 5}}><textarea style={{resize: 'none', width: '100%'}} onChange={this.changeValue}>{this.state.cmder}</textarea></div>
+									<div className="col-md-2" style={{paddingTop: 10}}><a href="javascript:;" className="btn btn-w-md btn-warning" onClick={this.sendControl}>控制</a></div>
 								</div>
 								{Object.keys(this.state.ctrlData).map(key => {
 									let item = this.state.ctrlData[key];

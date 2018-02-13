@@ -42,12 +42,6 @@ Aside.defaultProps = {
 		name: '我的设备',
 		link: '/device'
 	},{
-		name: '实时数据',
-		link: '/virtual/0023558B2178'
-	},{
-		name: '历史数据',
-		link: '/history/0023558B2178'
-	},{
 		name: '地图模式',
 		link: '/maps'
 	},{

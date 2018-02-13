@@ -45,7 +45,7 @@ class AddUser extends React.Component {
 			let re = data.data;
 			if(re.result == 0){
 				that.setState({ 'useCompany': re.data });
-			}else if([-2,-5,-14].indexOf(re.result) > -1) {
+			}else if([-2,-14].indexOf(re.result) > -1) {
 				that.props.history.push('/login');
 			}else{
 				toast.error(re.message);
@@ -79,7 +79,7 @@ class AddUser extends React.Component {
 			if(re.result == 0){
 				that.userId = re.data.id;
 				that.selectDevice();
-			}else if([-2,-5,-14].indexOf(re.result) > -1) {
+			}else if([-2,-14].indexOf(re.result) > -1) {
 				that.props.history.push('/login');
 			}else{
 				toast.error(re.message);
@@ -96,7 +96,7 @@ class AddUser extends React.Component {
 				if (r.data.length < 1){
 					toast.success('添加成功！');
 				}
-			} else if([-2,-5,-14].indexOf(r.result) > -1) {
+			} else if([-2,-14].indexOf(r.result) > -1) {
 				that.props.history.push('/login');
 			}else{
 				toast.error(r.message);
@@ -118,7 +118,7 @@ class AddUser extends React.Component {
 			let result = data.data;
 			if(result.result == 0){
 				toast.success(result.message);
-			}else if([-2,-5,-14].indexOf(result.result) > -1) {
+			}else if([-2,-14].indexOf(result.result) > -1) {
 				that.props.history.push('/login');
 			}else{
 				toast.error(result.message);

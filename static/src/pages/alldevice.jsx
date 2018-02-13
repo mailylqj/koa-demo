@@ -38,7 +38,7 @@ class AllDevice extends React.Component {
 			let result = data.data;
 			if(result.result == 0){
 				that.setState({isOpen: false});
-			}else if([-2,-5,-14].indexOf(result.result) > -1) {
+			}else if([-2,-14].indexOf(result.result) > -1) {
 				that.props.history.push('/login');
 			}else{
 				toast.error(result.message);
@@ -100,7 +100,7 @@ class AllDevice extends React.Component {
 												<div className="space"></div>
 												<Link className="btn btn-sm btn-primary" to={'/device/' + item.id} title={item.device_id}>编辑</Link>
 												<div className="space"></div>
-												<button className="btn btn-sm btn-danger" data-id={item.device_id} onClick={this.openModal}>删除</button>
+												<button className="btn btn-sm btn-danger" data-id={item.id} onClick={this.openModal}>删除</button>
 											</td>
 										</tr>
 									);

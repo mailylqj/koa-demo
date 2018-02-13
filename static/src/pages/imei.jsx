@@ -1,6 +1,7 @@
 import React from 'react';
 import axios from 'axios';
 import PropTypes from 'prop-types';
+import Modal from 'react-modal';
 import {Link} from 'react-router-dom';
 import { toast } from 'react-toastify';
 import { Cookies } from '@/component/utils';
@@ -8,7 +9,11 @@ import { Cookies } from '@/component/utils';
 class Imei extends React.Component {
 	constructor(props) {
 		super(props);
-		this.state = {imeiList : [], imei: ''};
+		this.state = {
+			imeiList : [], 
+			imei: '',
+			isOpen: false
+		};
 	}
 	componentDidMount(){
 		const that = this;
@@ -22,22 +27,44 @@ class Imei extends React.Component {
 			}
 		});
 	}
-	changeValue = (e) => {
+	changeValue = e => {
 		this.setState({imei: e.target.value});
 	}
-	searchImei(){
+	searchImei = () => {
 		const that = this;
 		const param = {imei: this.state.imei, token: Cookies.get('_token') };
 		axios.post('/ajax/imeiSelectByImei', param).then(function(data){
 			let result = data.data;
 			if(result.result == 0){
 				that.setState({ 'imeiList': result.data });
-			}else if([-2,-5,-14].indexOf(result.result) > -1) {
+			}else if([-2,-14].indexOf(result.result) > -1) {
 				that.props.history.push('/login');
 			}else{
 				toast.error(result.message);
 			}
 		});
+	}
+	deleteImei = (e) => {
+		let that = this;
+		let param = {id_list:[this.imeiId], token: Cookies.get('__token') };
+		axios.post('/ajax/imeiDel', param).then(function(data){
+			let result = data.data;
+			if(result.result == 0){
+				that.setState({isOpen: false});
+			}else if([-2,-14].indexOf(result.result) > -1) {
+				that.props.history.push('/login');
+			}else{
+				toast.error(result.message);
+			}
+		});
+	}
+	openModal = (e) => {
+		this.imeiId = e.target.getAttribute('data-id');
+		this.setState({isOpen: true});
+	}
+	closeModal = (e) => {
+		this.imeiId = null;
+		this.setState({isOpen: false});
 	}
 	render() {
 		if (!this.props.style) {
@@ -79,7 +106,7 @@ class Imei extends React.Component {
 											<td>{item.pro_company}</td>
 											<td>{item.use_company}</td>
 											<td>
-												<button className="btn btn-sm btn-primary" onClick={this.checkDevice} id={item.id}>编辑</button>
+												<Link className="btn btn-sm btn-primary" to={'/imei/' + item.id} id={item.id}>编辑</Link>
 												<div className="space"></div>
 												<button className="btn btn-sm btn-danger" data-id={item.id} onClick={this.openModal}>删除</button>
 											</td>
@@ -89,6 +116,18 @@ class Imei extends React.Component {
 								</tbody>
 							</table>
 						</div>
+						<Modal isOpen={this.state.isOpen} onRequestClose={this.closeModal} className={{base:'modal-dialog', afterOpen:''}} overlayClassName={{base: 'modal-backdrop fade', afterOpen: 'in'}} bodyOpenClassName="modal-open" shouldCloseOnOverlayClick={true} style={{overlay: {backgroundColor: 'rgba(0, 0, 0, 0.5)'}, content: {backgroundColor: '#fff'}}}>
+							<div className="modal-header">
+								<div className="text-danger">警告！！</div>
+							</div>
+							<div className="modal-body">
+								<div className="text-danger text-center size-h3">是否确认删除此IMEI？</div>
+							</div>
+							<div className="modal-footer">
+								<button className="btn btn-danger" onClick={this.deleteImei}>确认删除</button>
+								<button className="btn btn-warning" onClick={this.closeModal}>取消</button>
+							</div>
+						</Modal>
 					</div>
 				</div>
 			</div>

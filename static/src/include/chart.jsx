@@ -6,6 +6,18 @@ import Exporting from 'highcharts/modules/exporting';
 highchartsMore(Highcharts);
 Exporting(Highcharts);
 
+Highcharts.setOptions({
+	global: {
+		useUTC: false
+	},
+	exporting:{
+		enabled:false
+	},
+	credits: {
+		enabled: false
+	}
+});
+
 class Charts extends React.Component {
 	componentDidMount() {
 		// Extend Highcharts with modules
@@ -13,7 +25,7 @@ class Charts extends React.Component {
 			this.props.modules.forEach(function (module) {
 				module(Highcharts);
 			});
-		}
+		}		
 		
 		// Set container which the chart should render to.
 		this.chart = new Highcharts[this.props.type || 'Chart'](
@@ -30,12 +42,20 @@ class Charts extends React.Component {
 	componentWillReceiveProps(nextProps){
 		let series = nextProps.series;
 		let { width, height, title, yAxis, min, max } = this.props.data;
-
 		if(width || height) this.chart.setSize(width-2, height-2);
 		if(max && min) this.chart.yAxis[0].setExtremes(min, max);
 		if(title) this.chart.setTitle({ text: title });
 		if(yAxis) this.chart.yAxis[0].setTitle({ text: yAxis });
-		if(series) this.chart.series[0].setData(series);
+		if(series){
+			if (this.chart.real){
+				this.chart.real.addPoint(series, true, true);
+			}else{
+				this.chart.series[0].setData(series);
+			}
+		}
+	}
+	shouldComponentUpdate(){
+		return false;
 	}
 	//Destroy chart before unmount.
 	componentWillUnmount() {

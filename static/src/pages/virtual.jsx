@@ -1,6 +1,8 @@
 import React from 'react';
 import axios from 'axios';
+import moment from 'moment';
 import PropTypes from 'prop-types';
+import update from 'immutability-helper';
 import { toast } from 'react-toastify';
 import Charts from '@/include/chart.jsx';
 import Options from '@/component/chatOptions';
@@ -15,6 +17,7 @@ class Virtual extends React.Component {
 			container: { mod_list: {} },
 			elements: {}
 		};
+		this.line = {};
 	}
 	componentDidMount(){
 		let that = this;
@@ -37,8 +40,12 @@ class Virtual extends React.Component {
 		console.log('Connection established!');
 	}
 	onSocketData(data) {
-		const result = JSON.parse(data.data);
-		this.setState({items: result.data_map});
+		const result = JSON.parse(data.data);		
+		this.setState(
+			update(this.state, {
+				items: { $merge: result.data_map }
+			})
+		);
 	}
 	onSocketClose() {
 		console.log('Connection closed!');
@@ -55,23 +62,39 @@ class Virtual extends React.Component {
 			return(<img style={{maxHeight: '100%', maxWidth: '100%'}} src={imgSrc}/>);
 		}
 		case 'curve': {
-			let chart = JSON.parse(JSON.stringify(Options[type]));			
-			if(value) this.state.array.push(value);
-			if(this.state.array.length > 12){
-				this.state.array = this.state.array.slice(1);
-			}
-			return(<Charts style={{height: 150, width: 200}} type="chart" data={data} container={'chart' + id} options={chart} series={this.state.array}/>);
+			let chart = JSON.parse(JSON.stringify(Options[type]));
+			chart['chart'] = {events: {load: function () {this.real = this.series[0];} }};
+			let dvalue = [value];
+			return(<Charts style={{height: data.height, width: data.width}} type="chart" data={data} container={'chart' + id} options={chart} series={dvalue}/>);
 		}
 		case 'speed':
 		case 'column':
 		case 'voltage':{
 			let chart = JSON.parse(JSON.stringify(Options[type]));
+			if (type == 'speed' && data.max && data.min){
+				chart['yAxis']['plotBands'] = [{
+					from: parseInt(data.min),
+					to: parseInt(data.max) * 0.6,
+					color: '#55BF3B' // green
+				}, {
+					from: parseInt(data.max) * 0.6,
+					to: parseInt(data.max) * 0.8,
+					color: '#DDDF0D' // yellow
+				}, {
+					from: parseInt(data.max) * 0.8,
+					to: parseInt(data.max),
+					color: '#DF5353' // red
+				}];
+			}
 			let dvalue = [value];
-			return(<Charts style={{height: 150, width: 200}} type="chart" data={data} container={'chart' + id} options={chart} series={dvalue}/>);
+			return(<Charts style={{height: data.height, width: data.width}} type="chart" data={data} container={'chart' + id} options={chart} series={dvalue}/>);
 		}
 		default: {
 			return(<div style={{padding: '0.5rem 1rem'}}>{value ? value : data.title}</div>);
 		}}
+	}
+	componentWillUnmount() {
+		this.socket.close();
 	}
 	render() {
 		if (!this.props.style) {

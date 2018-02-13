@@ -36,7 +36,7 @@ class Header extends React.Component {
 		let username = Cookies.get('__pin');
 		return (
 			<div className="top-header clearfix">
-				<div className="logo"><a><span>Square</span></a></div>
+				<div className="logo"><a><span>工业物联网云平台</span></a></div>
 				<div className="top-nav clearfix">
 					<ul className="nav-left list-unstyled">
 						<li><a href="javascript:;" className="toggle-min" onClick={this.toggleSide}><i className="fa fa-bars"></i></a></li>
@@ -49,9 +49,15 @@ class Header extends React.Component {
 							</a>
 							<ul className="dropdown-menu dropdown-dark with-arrow">
 								<li>
+									<a href="/password">
+										<i className="fa fa-sign-out"></i>
+										<span>修改密码</span>
+									</a>
+								</li>
+								<li>
 									<a href="/login">
 										<i className="fa fa-sign-out"></i>
-										<span>Log Out</span>
+										<span>注销</span>
 									</a>
 								</li>
 							</ul>

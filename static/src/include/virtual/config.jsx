@@ -41,7 +41,7 @@ class Config extends React.Component {
 		switch(item.type) {
 		case 2:{
 			return (
-				<Dropzone accept="image/jpeg, image/png, image/bmp" onDrop={this.onDrop.bind(this)} style={{width: '100%', height: 34, textAlign: 'center', lineHeight: '32px', border: '2px dashed #666'}}>拖动或点击上传图片</Dropzone>
+				<Dropzone accept="image/jpeg, image/png, image/bmp, image/gif" onDrop={this.onDrop.bind(this)} style={{width: '100%', height: 34, textAlign: 'center', lineHeight: '32px', border: '2px dashed #666'}}>拖动或点击上传图片</Dropzone>
 			);
 		}	
 		default:{
@@ -74,7 +74,7 @@ class Config extends React.Component {
 					<div className="text-primary">编辑组件</div>
 				</div>
 				<div className="modal-body">
-					<div className="row">
+					<div className="row" style={{maxHeight: 450, overflowY: 'auto'}}>
 						{Object.keys(options).map(key => {
 							const item = options[key];
 							return (

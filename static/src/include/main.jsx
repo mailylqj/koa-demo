@@ -3,13 +3,14 @@ import axios from 'axios';
 import PropTypes from 'prop-types';
 import Index from '@/pages/index.jsx';
 import Login from '@/pages/login.jsx';
+import Password from '@/pages/password.jsx';
 import Device from '@/pages/device.jsx';
 import History from '@/pages/history.jsx';
 import Visual from '@/pages/visual.jsx';
 import Virtual from '@/pages/virtual.jsx';
 import Maps from '@/pages/maps.jsx';
 import User from '@/pages/user.jsx';
-import Update from '@/pages/update.jsx';
+import EditUser from '@/pages/editUser.jsx';
 import AddUser from '@/pages/adduser.jsx';
 import AllDevice from '@/pages/alldevice.jsx';
 import EditDevice from '@/pages/editdevice.jsx';
@@ -18,6 +19,10 @@ import EditVR from '@/pages/editvr.jsx';
 import Company from '@/pages/company.jsx';
 import Audit from '@/pages/audit.jsx';
 import Imei from '@/pages/imei.jsx';
+import EditImei from '@/pages/editImei.jsx';
+import AddImei from '@/pages/addImei.jsx';
+import Control from '@/pages/control.jsx';
+import Alarm from '@/pages/alarm.jsx';
 
 import Test from '@/pages/test.jsx';
 
@@ -58,6 +63,7 @@ class Main extends React.Component {
 			<Switch>
 				<Route exact path="/" component={Index}/>
 				<Route path="/login" component={Login}/>
+				<Route path="/password" component={Password}/>
 				<Route path="/alldevice" component={AllDevice}/>
 				<Route exact path="/device" component={Device}/>
 				<Route path="/device/:id" component={EditDevice}/>
@@ -67,12 +73,16 @@ class Main extends React.Component {
 				<Route path="/history/:id" component={History}/>
 				<Route path="/visual/:id" component={Visual}/>
 				<Route path="/virtual/:id" component={Virtual}/>
+				<Route path="/control/:id" component={Control}/>
+				<Route path="/alarm/:id" component={Alarm}/>
 				<Route exact path="/user" component={User}/>
 				<Route path="/adduser" component={AddUser}/>
-				<Route path="/user/:id" component={Update}/>				
+				<Route path="/user/:id" component={EditUser}/>
 				<Route path="/company" component={Company}/>
 				<Route path="/audit" component={Audit}/>
-				<Route path="/imei" component={Imei}/>
+				<Route exact path="/imei" component={Imei}/>
+				<Route path="/imei/:id" component={EditImei}/>
+				<Route path="/addimei" component={AddImei}/>
 				<Route path="/test" component={Test}/>
 			</Switch>
 		);

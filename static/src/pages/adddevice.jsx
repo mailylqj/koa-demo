@@ -39,7 +39,7 @@ class AddDevice extends React.Component {
 			let re = data.data;
 			if(re.result == 0){
 				that.setState({ 'useCompany': re.data });
-			}else if([-2,-5,-14].indexOf(re.result) > -1) {
+			}else if([-2,-14].indexOf(re.result) > -1) {
 				that.props.history.push('/login');
 			}else{
 				toast.error(re.message);
@@ -121,7 +121,7 @@ class AddDevice extends React.Component {
 						toast.error(ret.message);
 					}
 				});
-			}else if([-2,-5,-14].indexOf(result.result) > -1) {
+			}else if([-2,-14].indexOf(result.result) > -1) {
 				that.props.history.push('/login');
 			}else{
 				toast.error(result.message);
@@ -143,7 +143,7 @@ class AddDevice extends React.Component {
 			let result = data.data;
 			if(result.result == 0){
 				toast.success(result.message);
-			}else if([-2,-5,-14].indexOf(result.result) > -1) {
+			}else if([-2,-14].indexOf(result.result) > -1) {
 				that.props.history.push('/login');
 			}else{
 				toast.error(result.message);
@@ -187,14 +187,14 @@ class AddDevice extends React.Component {
 											<div className="col-md-9">
 												{this.state.device.cmd.map((item, index) => {
 													return (
-														<div className="row" style={{paddingTop: index > 0 ? 10 : 0 }} key={index}>
+														<div style={{paddingTop: index > 0 ? 10 : 0 }} key={index}>
 															{Object.keys(item).map(key => {
 																let cmds = item[key];
 																return (
-																	<div key={key} className="col-md-2"><input type="number" bind-key={key} bind-index={index} className="form-control" value={cmds} onChange={this.changeValue}/></div>
+																	<span style={{width: '18%', display: 'inline-block', paddingRight: 5}}><input type="tel" bind-key={key} bind-index={index} className="form-control" value={cmds} onChange={this.changeValue}/></span>
 																);
 															})}
-															{(index == 0) ? <div key={index} className="col-md-2"><a href="javascript:;" className="btn btn-info" onClick={this.addCmds}>添加</a></div> : <div></div>}
+															{(index == 0) ? <a style={{width: '10%', verticalAlign: 'top'}} href="javascript:;" className="btn btn-info" onClick={this.addCmds}>添加</a> : ''}
 														</div>
 													);
 												})}

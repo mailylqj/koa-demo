@@ -70,7 +70,7 @@ export default class Target extends Component {
 				let { data: container } = result;
 				let { mod_list: elements } = container;
 				that.setState({elements: elements, container: container, ajaxUrl: '/ajax/layoutUpdate'});
-			}else if([-2,-5,-14].indexOf(result.result) > -1) {
+			}else if([-2,-14].indexOf(result.result) > -1) {
 				that.props.history.push('/login');
 			}else{
 				toast.error(result.message);
@@ -166,7 +166,7 @@ export default class Target extends Component {
 			let result = data.data;
 			if(result.result == 0){
 				toast.success(result.message);
-			}else if([-2,-5,-14].indexOf(result.result) > -1) {
+			}else if([-2,-14].indexOf(result.result) > -1) {
 				that.props.history.push('/login');
 			}else{
 				toast.error(result.message);
@@ -204,7 +204,7 @@ export default class Target extends Component {
 			let result = data.data;
 			if(result.result == 0){
 				toast.success('保存成功');
-			}else if([-2,-5,-14].indexOf(result.result) > -1) {
+			}else if([-2,-14].indexOf(result.result) > -1) {
 				that.props.history.push('/login');
 			}else{
 				toast.error(result.message);
@@ -232,7 +232,7 @@ export default class Target extends Component {
 			let result = data.data;
 			if(result.result == 0){
 				that.setState({ 'container': result.data });
-			}else if([-2,-5,-14].indexOf(result.result) > -1) {
+			}else if([-2,-14].indexOf(result.result) > -1) {
 				that.props.history.push('/login');
 			}else{
 				toast.error(result.message);

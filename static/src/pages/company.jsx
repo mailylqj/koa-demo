@@ -1,5 +1,6 @@
 import React from 'react';
 import axios from 'axios';
+import Modal from 'react-modal';
 import PropTypes from 'prop-types';
 import update from 'immutability-helper';
 import {Link} from 'react-router-dom';
@@ -14,7 +15,7 @@ const isEmpty = value => {
 class Company extends React.Component {
 	constructor(props) {
 		super(props);
-		this.state = {proCompany: {}, useCompany: {}};
+		this.state = {proCompany: {}, useCompany: {}, isOpen: false};
 	}
 	componentDidMount(){
 		let that = this;
@@ -116,7 +117,7 @@ class Company extends React.Component {
 						}
 					}
 				));
-			}else if([-2,-5,-14].indexOf(result.result) > -1) {
+			}else if([-2,-14].indexOf(result.result) > -1) {
 				that.props.history.push('/login');
 			}else{
 				toast.error(result.message);
@@ -144,7 +145,7 @@ class Company extends React.Component {
 						}
 					}
 				));
-			}else if([-2,-5,-14].indexOf(result.result) > -1) {
+			}else if([-2,-14].indexOf(result.result) > -1) {
 				that.props.history.push('/login');
 			}else{
 				toast.error(result.message);
@@ -167,6 +168,31 @@ class Company extends React.Component {
 			}
 		});
 	}
+	deleteCompany = (e) => {
+		let that = this;
+		let url = this.type == 'pro' ? '/ajax/proCompanyDel' : '/ajax/useCompanyDel';
+		let param = { id_list: [this.companyId], token: Cookies.get('__token') };
+		axios.post(url, param).then(function (data) {
+			let result = data.data;
+			if (result.result == 0) {
+				that.setState({ isOpen: false });
+			} else if ([-2, -14].indexOf(result.result) > -1) {
+				that.props.history.push('/login');
+			} else {
+				toast.error(result.message);
+			}
+		});
+	}
+	openModal = (e) => {
+		this.type = e.target.getAttribute('data-type');
+		this.companyId = e.target.getAttribute('data-id');
+		this.setState({ isOpen: true });
+	}
+	closeModal = (e) => {
+		this.type = null;
+		this.companyId = null;
+		this.setState({ isOpen: false });
+	}
 	render() {
 		if (!this.props.style) {
 			return null;
@@ -174,7 +200,7 @@ class Company extends React.Component {
 		return (			
 			<div className={this.props.style} id="content">
 				<div className="page">
-				<div className="row">
+					<div className="row">
 						<div className={isEmpty(this.state.useCompany) ? 'col-md-12' : 'col-md-6'} style={{display: isEmpty(this.state.proCompany) ? 'none' : 'block'}}>
 							<div className="panel panel-default">
 								<div className="panel-heading">
@@ -201,7 +227,7 @@ class Company extends React.Component {
 													<td>
 														<button className="btn btn-sm btn-primary" id={item.id} title={item.id} onClick={this.editProCompany}>编辑</button>
 														<div className="space"></div>
-														<button className="btn btn-sm btn-danger" data-id={item.id} onClick={this.openModal}>删除</button>
+														<button className="btn btn-sm btn-danger" data-id={item.id} data-type="pro" onClick={this.openModal}>删除</button>
 														<div className="space"></div>														
 														<button className="btn btn-sm btn-primary" id={item.id} title={item.id} onClick={this.checkSub}>查看使用公司</button>
 													</td>
@@ -240,7 +266,7 @@ class Company extends React.Component {
 													<td>
 														<button className="btn btn-sm btn-primary" id={item.id} title={item.id} onClick={this.editUseCompany}>编辑</button>
 														<div className="space"></div>
-														<button className="btn btn-sm btn-danger" data-id={item.id} onClick={this.openModal}>删除</button>
+														<button className="btn btn-sm btn-danger" data-id={item.id} data-type="use" onClick={this.openModal}>删除</button>
 													</td>
 												</tr>
 											);
@@ -252,6 +278,18 @@ class Company extends React.Component {
 						</div>
 					</div>
 				</div>
+				<Modal isOpen={this.state.isOpen} onRequestClose={this.closeModal} className={{ base: 'modal-dialog', afterOpen: '' }} overlayClassName={{ base: 'modal-backdrop fade', afterOpen: 'in' }} bodyOpenClassName="modal-open" shouldCloseOnOverlayClick={true} style={{ overlay: { backgroundColor: 'rgba(0, 0, 0, 0.5)' }, content: { backgroundColor: '#fff' } }}>
+					<div className="modal-header">
+						<div className="text-danger">警告！！</div>
+					</div>
+					<div className="modal-body">
+						<div className="text-danger text-center size-h3">是否确认删除此公司？</div>
+					</div>
+					<div className="modal-footer">
+						<button className="btn btn-danger" onClick={this.deleteCompany}>确认删除</button>
+						<button className="btn btn-warning" onClick={this.closeModal}>取消</button>
+					</div>
+				</Modal>
 			</div>
 		);
 	}

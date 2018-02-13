@@ -45,7 +45,7 @@ class Login extends React.Component {
 				<div className="signin-header">
 					<div className="container text-center">
 						<section className="logo">
-							<a href="javascript:;" className="">Square</a>
+							<a href="javascript:;" className="">工业物联网云平台</a>
 						</section>
 					</div>
 				</div>

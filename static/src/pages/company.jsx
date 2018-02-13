@@ -207,6 +207,20 @@ class Company extends React.Component {
 									<span>生产公司列表</span>
 								</div>
 								<div className="panel-body">
+									<div className="row" style={{ paddingBottom: '15px', marginBottom: '15px', borderBottom: '1px solid #ddd' }}>
+										<div className="col-md-4">
+											<Link className="btn btn-w-md btn-info" to="/addcompany">添加公司</Link>
+										</div>
+										<div className="col-md-4"></div>
+										<div className="col-md-4">
+											<div className="input-group">
+												<input type="text" className="form-control" value={this.state.username} onChange={this.changeValue} placeholder="请输入公司名字" />
+												<span className="input-group-btn">
+													<button className="btn btn-success" type="button" onClick={this.searchUser}>查询</button>
+												</span>
+											</div>
+										</div>
+									</div>
 									<table className="table table-hover">
 										<thead>
 											<tr><th>#</th><th>公司名称</th><th>操作</th></tr>

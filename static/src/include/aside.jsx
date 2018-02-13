@@ -18,11 +18,16 @@ class Aside extends React.Component {
 		let path = location.pathname;
 		return (
 			<div id="nav-container">				
-				<div id="nav-wrapper">
+				<div id="nav-wrapper"  text-align="center">
 					<ul className="list" id="nav">
 					{this.props.menus.map(function(item, index){
 						let reg = new RegExp(item.link);
-						return <li className={reg.test(path) ? 'active' : ''} key={index}><Link to={item.link} title={item.name}>{item.name}</Link></li>;
+						return (
+							<li  text-align="center" className={reg.test(path) ? 'active' : ''} key={index}>
+								<Link to={item.link} title={item.name}><i className={'glyphicon ' + item.class}></i>{item.name}</Link>
+								<i className="fa fa-caret-right icon-has-ul"></i>
+							</li>
+						);
 					})}
 					</ul>
 				</div>
@@ -40,25 +45,32 @@ Aside.defaultProps = {
 	style: 'header',
 	menus: [{
 		name: '我的设备',
-		link: '/device'
+		link: '/device',
+		class: 'glyphicon-wrench'
 	},{
 		name: '地图模式',
-		link: '/maps'
+		link: '/maps',
+		class: 'glyphicon-map-marker'
 	},{
 		name: '公司管理',
-		link: '/company'
+		link: '/company',
+		class: 'glyphicon-briefcase'
 	},{
 		name: '用户中心',
-		link: '/user'
+		link: '/user',
+		class: 'glyphicon-user'
 	},{
 		name: '设备管理',
-		link: '/alldevice'
+		link: '/alldevice',
+		class: 'glyphicon-th-list'
 	},{
 		name: 'IMEI管理',
-		link: '/imei'
+		link: '/imei',
+		class: 'glyphicon-phone'
 	},{
 		name: '设备审核',
-		link: '/audit'
+		link: '/audit',
+		class: 'glyphicon-eye-open'
 	}]
 };
 

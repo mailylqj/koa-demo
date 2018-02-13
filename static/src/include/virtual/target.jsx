@@ -231,7 +231,9 @@ export default class Target extends Component {
 		axios.post('/ajax/layoutTempSelectByID', param).then(function(data){
 			let result = data.data;
 			if(result.result == 0){
-				that.setState({ 'container': result.data });
+				let { data: container } = result;
+				let { mod_list: elements } = container;
+				that.setState({ 'container': container, 'elements': elements, 'tplModal': false });
 			}else if([-2,-14].indexOf(result.result) > -1) {
 				that.props.history.push('/login');
 			}else{

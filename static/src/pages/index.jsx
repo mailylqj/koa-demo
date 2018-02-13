@@ -1,4 +1,5 @@
 import React from 'react';
+import moment from 'moment';
 import PropTypes from 'prop-types';
 import { Cookies } from '@/component/utils';
 
@@ -11,7 +12,7 @@ class Index extends React.Component {
 			return null;
 		}
 		let username = Cookies.get('_pin');
-		let date = new Date().Format('yyyy-MM-dd HH:mm:ss');
+		let date = moment().format('YYYY-MM-DD HH:mm:ss');
 		return (			
 			<div className={this.props.style} id="content">
 				<div className="page">

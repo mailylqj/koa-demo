@@ -1,7 +1,7 @@
 import React from 'react';
 import axios from 'axios';
+import moment from 'moment';
 import PropTypes from 'prop-types';
-import '@/component/prototype';
 import { Cookies } from '@/component/utils';
 
 class History extends React.Component {
@@ -14,8 +14,8 @@ class History extends React.Component {
 	}
 	componentDidMount(){
 		const param = {
-			endTime: new Date().getTime(),
-			startTime: new Date().getTime() - 60000,
+			endTime: moment().valueOf(),
+			startTime: moment().valueOf() - 60000,
 			uid: this.props.match.params.id,
 			token: Cookies.get('__token')
 		};
@@ -24,7 +24,7 @@ class History extends React.Component {
 			let result = data.data;
 			if(result.result == 0){
 				for (var i = 0, ii = result.data.data.length; i < ii; i++) {
-					result.data.data[i]['dateTime'] = new Date(result.data.data[i].time).Format('yyyy-MM-dd HH:mm:ss');
+					result.data.data[i]['dateTime'] = moment(result.data.data[i].time).format('YYYY-MM-DD HH:mm:ss');
 				}
 				that.setState({ 'hisData': result.data.data });
 				that.setState({ 'keyData': that.state.hisData[0].value_list});

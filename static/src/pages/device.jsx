@@ -46,9 +46,13 @@ class Device extends React.Component {
 										<td><span className="color-success"><i className="fa fa-level-up"></i></span>{item.deviceName}</td>
 										<td><span className={'label ' + (item.onLine ? 'label-success' : 'label-default')}>{item.onLine ? '在线' : '离线'}</span></td>
 										<td>
-											<Link className="btn btn-sm btn-primary" to={'/virtual/' + item.deviceNO} title={item.deviceNO}>查看实时数据</Link>
+											<Link className="btn btn-sm btn-success" to={'/virtual/' + item.deviceNO} title={item.deviceNO}>查看实时数据</Link>
 											<div className="space"></div>
-											<Link className="btn btn-sm btn-danger" to={'/history/' + item.deviceNO} title={item.deviceNO}>查看历史数据</Link>
+											<Link className="btn btn-sm btn-primary" to={'/history/' + item.deviceNO} title={item.deviceNO}>查看历史数据</Link>
+											<div className="space"></div>
+											<Link className="btn btn-sm btn-danger" to={'/control/' + item.deviceNO} title={item.deviceNO}>查看控制数据</Link>
+											<div className="space"></div>
+											<Link className="btn btn-sm btn-warning" to={'/alarm/' + item.deviceNO} title={item.deviceNO}>查看报警数据</Link>
 										</td>
 									</tr>
 								);

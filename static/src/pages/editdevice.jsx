@@ -2,10 +2,8 @@ import React from 'react';
 import axios from 'axios';
 import {Link} from 'react-router-dom';
 import update from 'immutability-helper';
-import DatePicker from 'react-datepicker';
 import moment from 'moment';
 import { toast } from 'react-toastify';
-import 'react-datepicker/dist/react-datepicker.css';
 import { Cookies } from '@/component/utils';
 
 class EditDevice extends React.Component {
@@ -183,38 +181,22 @@ class EditDevice extends React.Component {
 											<div className="col-md-9"><input type="text" className="form-control" value={this.state.device.device_name}/></div>
 										</div>
 										<div className="form-group">
-											<label className="col-md-3">采集数据长度</label>
-											<div className="col-md-9"><input type="text" className="form-control" value={this.state.device.cmd_len}/></div>
-										</div>
-										<div className="form-group">
-											<label className="col-md-3">循环采集时间</label>
-											<div className="col-md-9"><input type="text" className="form-control" value={this.state.device.loop_time}/></div>
-										</div>
-										<div className="form-group">
-											<label className="col-md-3">设备状态</label>
-											<div className="col-md-9">
-												{this.state.allState.map((item, index) => {
-													return (
-														<div key={index} className="col-md-4">
-															<label className="ui-checkbox">
-																<input name="deviceState" type="checkbox" value={index} checked={this.state.device.ischeck == index ? true : false} onChange={this.changeState}/>
-																<span>{item}</span>
-															</label>
-														</div>
-													);
-												})}
-											</div>
-										</div>
-										<div className="form-group">
 											<label className="col-md-3">命令</label>
 											<div className="col-md-9">
+												<div className="row">
+													<div className="col-md-2"><label>设备地址</label></div>
+													<div className="col-md-2"><label>功能码</label></div>
+													<div className="col-md-2"><label>起始地址</label></div>
+													<div className="col-md-2"><label>命令长度</label></div>
+													<div className="col-md-2"><label>循环时间</label></div>
+												</div>
 												{this.state.device.cmd.map((item, index) => {
 													return (
 														<div className="row" style={{paddingTop: index > 0 ? 10 : 0 }} key={index}>
 															{Object.keys(item).map(key => {
 																let cmds = item[key];
 																return (
-																	<div key={key} className="col-md-2"><input type="number" bind-key={key} bind-index={index} className="form-control" value={cmds} onChange={this.changeValue}/></div>
+																	<div key={key} className="col-md-2"><input type="text" bind-key={key} bind-index={index} className="form-control" value={cmds} onChange={this.changeValue}/></div>
 																);
 															})}
 															{(index == 0) ? <div key={index} className="col-md-2"><a href="javascript:;" className="btn btn-info" onClick={this.addCmds}>添加</a></div> : <div></div>}

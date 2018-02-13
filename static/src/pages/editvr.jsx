@@ -9,27 +9,19 @@ class EditVR extends React.Component {
 	constructor(props) {
 		super(props);
 	}
-	componentDidMount(){
-		let that = this;
-		let param = {device_id: this.props.match.params.id, token: Cookies.get('__token') };
-		axios.post('/ajax/layoutSelectByDeviceID', param).then(function(data){
-			let result = data.data;
-		});
-	}
+	componentDidMount(){}	
 	render() {
 		if (!this.props.style) {
 			return null;
-		}
-		let username = Cookies.get('_pin');
-		let date = new Date().Format('yyyy-MM-dd HH:mm:ss');
+		}		
 		return (			
 			<div className={this.props.style} id="content">
 				<div className="page">
 					<div className="panel panel-default">
 						<div className="panel-heading">
-							<span>index</span>
+							<span>编辑工程图</span>
 						</div>
-						<div className="panel-body">
+						<div className="panel-body">							
 							<Container deviceid={this.props.match.params.id}/>
 						</div>
 					</div>

@@ -2,19 +2,18 @@ import React from 'react';
 import axios from 'axios';
 import moment from 'moment';
 import PropTypes from 'prop-types';
-import DatePicker from 'react-datepicker';
-import '@/component/prototype';
+import Datetime from 'react-datetime';
+import { toast } from 'react-toastify';
 import { Cookies } from '@/component/utils';
 
-import 'react-datepicker/dist/react-datepicker.css';
+import 'react-datetime/css/react-datetime.css';
 
 class Control extends React.Component {
 	constructor(props) {
 		super(props);
 		this.state = {
-			keyData: [],
 			hisData: [],
-			cmder: 'test',
+			curPage: 1,
 			startTime: moment(),
 			endTime: moment()
 		};
@@ -39,16 +38,51 @@ class Control extends React.Component {
 		axios.post('/ajax/readControlData', param).then(function(data){
 			let result = data.data;
 			if(result.result == 0){
-				for (var i = 0, ii = result.data.data.length; i < ii; i++) {
-					result.data.data[i]['dateTime'] = new Date(result.data.data[i].time).Format('yyyy-MM-dd HH:mm:ss');
+				for (var i = 0, ii = result.data.length; i < ii; i++) {
+					result.data[i]['dateTime'] = moment(result.data[i].date).format('YYYY-MM-DD HH:mm:ss');
 				}
-				that.setState({ 'hisData': result.data.data });
-				that.setState({ 'keyData': that.state.hisData[0].value_list});
-			}else{
+				that.setState({ 'hisData': result.data });
+			} else if ([-2, -14].indexOf(result.result) > -1) {
 				that.props.history.push('/login');
+			} else {
+				toast.error(result.message);
 			}	
 		}).catch(function(error){
 			console.log(error);
+		});
+	}
+	getPrevpage = e => {
+		let that = this;
+		if (this.state.curPage > 1) {
+			axios.post('/ajax/readControlDataPrev').then(function (data) {
+				let result = data.data;
+				if (result.result == 0) {
+					for (var i = 0, ii = result.data.length; i < ii; i++) {
+						result.data[i]['dateTime'] = moment(result.data[i].date).format('YYYY-MM-DD HH:mm:ss');
+					}
+					that.setState({ 'hisData': result.data, curPage: that.state.curPage - 1 });
+				} else if ([-2, -14].indexOf(result.result) > -1) {
+					that.props.history.push('/login');
+				} else {
+					toast.error(result.message);
+				}
+			});
+		}
+	}
+	getNextpage = e => {
+		let that = this;
+		axios.post('/ajax/readControlDataNext').then(function (data) {
+			let result = data.data;
+			if (result.result == 0) {
+				for (var i = 0, ii = result.data.data.length; i < ii; i++) {
+					result.data.data[i]['dateTime'] = moment(result.data.data[i].date).format('YYYY-MM-DD HH:mm:ss');
+				}
+				that.setState({ 'hisData': result.data.data, curPage: that.state.curPage + 1 });
+			} else if ([-2, -14].indexOf(result.result) > -1) {
+				that.props.history.push('/login');
+			} else {
+				toast.error(result.message);
+			}
 		});
 	}	
 	render() {
@@ -65,10 +99,10 @@ class Control extends React.Component {
 						<div className="panel-body">
 							<div className="clearfix data-fillter">
 								<div className="col-md-5">
-									<DatePicker className="form-control" dateFormat="YYYY-MM-DD hh:mm" timeIntervals={5} showTimeSelect placeholderText="开始时间" selected={this.state.startTime} onChange={this.pickStartTime}></DatePicker>
+									<Datetime dateFormat="YYYY-MM-DD" timeFormat="HH:mm:ss" inputProps={{ placeholder: '开始时间' }} value={this.state.startTime} onChange={this.pickStartTime}></Datetime>
 								</div>
 								<div className="col-md-5">
-									<DatePicker className="form-control" dateFormat="YYYY-MM-DD hh:mm" timeIntervals={5} showTimeSelect placeholderText="结束时间" selected={this.state.endTime} onChange={this.pickEndTime}></DatePicker>
+									<Datetime dateFormat="YYYY-MM-DD" timeFormat="HH:mm:ss" inputProps={{ placeholder: '结束时间' }} value={this.state.endTime} onChange={this.pickEndTime}></Datetime>
 								</div>
 								<div className="col-md-2">
 									<button type="submit" className="btn btn-w-md btn-primary" onClick={this.getControl}>查询</button>
@@ -76,42 +110,25 @@ class Control extends React.Component {
 							</div>							
 							<table className="table">
 								<thead>
-									<tr>
-										<th>时间</th>
-										{this.state.keyData.map((item, index) => {
-											return <th key={index}>{item.name}</th>;
-										})}
-									</tr>	
+									<tr><th>时间</th><th>控件名</th><th>IMEI</th><th>设定值</th></tr>
 								</thead>
 								<tbody>
 									{this.state.hisData.map((item, index) => {
 										return (
 											<tr key={index}>
 												<td>{item.dateTime}</td>
-												{item.value_list.map((val, index) => {
-													return <td key={index}>{val.value}</td>;
-												})}
+												<td>{item.name}</td>
+												<td>{item.imei}</td>
+												<td>{item.content}</td>
 											</tr>
 										);
 									})}
 								</tbody>
 							</table>
 							<ul className="pagination-sm pagination">
-								<li>
-									<a>First</a>
-								</li>
-								<li>
-									<a>Previous</a>
-								</li>
-								<li>
-									<a>1</a>
-								</li>
-								<li>
-									<a>Next</a>
-								</li>
-								<li>
-									<a>Last</a>
-								</li>
+								<li><a href="javascript:;" onClick={this.getPrevpage}>上一页</a></li>
+								<li><span>{this.state.curPage}</span></li>
+								<li><a href="javascript:;" onClick={this.getNextpage}>下一页</a></li>
 							</ul>
 						</div>
 					</div>	

@@ -36,15 +36,15 @@ class Header extends React.Component {
 		let username = Cookies.get('__pin');
 		return (
 			<div className="top-header clearfix">
-				<div className="logo"><a><span>工业物联网云平台</span></a></div>
+				<div className="logo"><a><span>云平台</span></a></div>
 				<div className="top-nav clearfix">
 					<ul className="nav-left list-unstyled">
 						<li><a href="javascript:;" className="toggle-min" onClick={this.toggleSide}><i className="fa fa-bars"></i></a></li>
 						<li className={'dropdown text-normal nav-profile ' + this.state.openClass}>
 							<a href="javascript:;" className="dropdown-toggle" onClick={this.toggleDropdown}>
-								<img src="images/g1.jpg" alt="" className="img-circle img30_30"/>
+								<img src="/assets/img/tx.jpg" alt=" " className="img-circle img30_30"/>
 								<span className="hidden-xs">
-									<span>{username}</span>
+									<span>&nbsp;&nbsp;{username}</span>
 								</span>
 							</a>
 							<ul className="dropdown-menu dropdown-dark with-arrow">
@@ -78,6 +78,148 @@ class Header extends React.Component {
 								<li><a href="javascript:;"><div className="flag flags-russia"></div> Русский язык</a></li>
 								<li><a href="javascript:;"><div className="flag flags-korea"></div> 한국어</a></li>
 							</ul>
+						</li>
+					</ul>
+
+					<ul className="nav-right pull-right list-unstyled">
+						<li className="dropdown">
+							<a href="javascript:;" className="dropdown-toggle bg-orange" data-toggle="dropdown">
+								<i className="fa fa-comment-o"></i>
+								<span className="badge badge-info">0</span>
+							</a>
+							<div className="dropdown-menu pull-right with-arrow panel panel-default">
+								<div className="panel-heading">You have 2 messages.</div>
+								<ul className="list-group">
+									<li className="list-group-item">
+										<a href="javascript:;" className="media">
+											<span className="pull-left media-icon">
+												<span className="square-icon sm bg-info"><i className="fa fa-comment-o"></i></span>
+											</span>
+											<div className="media-body">
+												<span className="block">Jane sent you a message</span>
+												<span className="text-muted">3 hours ago</span>
+											</div>
+										</a>
+									</li>
+									<li className="list-group-item">
+										<a href="javascript:;" className="media">
+											<span className="pull-left media-icon">
+												<span className="square-icon sm bg-danger"><i className="fa fa-comment-o"></i></span>
+											</span>
+											<div className="media-body">
+												<span className="block">Lynda sent you a mail</span>
+												<span className="text-muted">9 hours ago</span>
+											</div>
+										</a>
+									</li>
+								</ul>
+								<div className="panel-footer">
+									<a href="javascript:;">Show all messages.</a>
+								</div>
+							</div>
+						</li>
+						<li className="dropdown">
+							<a href="javascript:;" className="dropdown-toggle bg-warning" data-toggle="dropdown">
+								<i className="fa fa-envelope-o"></i>
+								<span className="badge badge-info">0</span>
+							</a>
+							<div className="dropdown-menu pull-right with-arrow panel panel-default">
+								<div className="panel-heading">
+									You have 3 mails.
+								</div>
+								<ul className="list-group">
+									<li className="list-group-item">
+										<a href="javascript:;" className="media">
+											<span className="pull-left media-icon">
+												<span className="square-icon sm bg-warning"><i className="fa fa-envelope-o"></i></span>
+											</span>
+											<div className="media-body">
+												<span className="block">Lisa sent you a mail</span>
+												<span className="text-muted block">2min ago</span>
+											</div>
+										</a>
+									</li>
+									<li className="list-group-item">
+										<a href="javascript:;" className="media">
+											<span className="pull-left media-icon">
+												<span className="square-icon sm bg-info"><i className="fa fa-envelope-o"></i></span>
+											</span>
+											<div className="media-body">
+												<span className="block">Jane sent you a mail</span>
+												<span className="text-muted">3 hours ago</span>
+											</div>
+										</a>
+									</li>
+									<li className="list-group-item">
+										<a href="javascript:;" className="media">
+											<span className="pull-left media-icon">
+												<span className="square-icon sm bg-success"><i className="fa fa-envelope-o"></i></span>
+											</span>
+											<div className="media-body">
+												<span className="block">Lynda sent you a mail</span>
+												<span className="text-muted">9 hours ago</span>
+											</div>
+										</a>
+									</li>
+								</ul>
+								<div className="panel-footer">
+									<a href="javascript:;">Show all mails.</a>
+								</div>
+							</div>
+						</li>
+						<li className="dropdown">
+							<a href="javascript:;" className="dropdown-toggle bg-success" data-toggle="dropdown">
+								<i className="fa fa-bell-o nav-icon"></i>
+								<span className="badge badge-info">0</span>
+							</a>
+							<div className="dropdown-menu pull-right with-arrow panel panel-default">
+								<div className="panel-heading">
+									You have 3 notifications.
+								</div>
+								<ul className="list-group">
+									<li className="list-group-item">
+										<a href="javascript:;" className="media">
+											<span className="pull-left media-icon">
+												<span className="square-icon sm bg-success"><i className="fa fa-bell-o"></i></span>
+											</span>
+											<div className="media-body">
+												<span className="block">New tasks needs to be done</span>
+												<span className="text-muted block">2min ago</span>
+											</div>
+										</a>
+									</li>
+									<li className="list-group-item">
+										<a href="javascript:;" className="media">
+											<span className="pull-left media-icon">
+												<span className="square-icon sm bg-info"><i className="fa fa-bell-o"></i></span>
+											</span>
+											<div className="media-body">
+												<span className="block">Change your password</span>
+												<span className="text-muted">3 hours ago</span>
+											</div>
+										</a>
+									</li>
+									<li className="list-group-item">
+										<a href="javascript:;" className="media">
+											<span className="pull-left media-icon">
+												<span className="square-icon sm bg-danger"><i className="fa fa-bell-o"></i></span>
+											</span>
+											<div className="media-body">
+												<span className="block">New feature added</span>
+												<span className="text-muted">9 hours ago</span>
+											</div>
+										</a>
+									</li>
+								</ul>
+								<div className="panel-footer">
+									<a href="javascript:;">Show all notifications.</a>
+								</div>
+							</div>
+						</li>
+						<li>
+							<a href="#/tasks" className="bg-info">
+								<i className="fa fa-tasks"></i>
+							</a>
 						</li>
 					</ul>
 				</div>

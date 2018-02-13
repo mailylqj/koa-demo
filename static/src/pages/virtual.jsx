@@ -15,7 +15,9 @@ class Virtual extends React.Component {
 			array: [],
 			items: {},
 			container: { mod_list: {} },
-			elements: {}
+			elements: {},
+			canContorl: {},
+			curWidget: null
 		};
 		this.line = {};
 	}
@@ -28,6 +30,14 @@ class Virtual extends React.Component {
 				let { data: container } = result;
 				that.setState({container: container});
 			}else{
+				toast.error(result.message);
+			}
+		});
+		axios.post('/ajax/layoutSelectWriteByDeviceID', param).then(function (data) {
+			let result = data.data;
+			if (result.result == 0) {
+				that.setState({ canContorl: result.data });
+			} else {
 				toast.error(result.message);
 			}
 		});
@@ -93,6 +103,31 @@ class Virtual extends React.Component {
 			return(<div style={{padding: '0.5rem 1rem'}}>{value ? value : data.title}</div>);
 		}}
 	}
+	changeValue = e => {
+		this.setState({ cmder: e.target.value });
+	}
+	chooseWidget = e => {
+		this.setState({ curWidget: e.currentTarget.value });
+	}
+	sendControl = () => {
+		let param = {
+			value: this.state.cmder,
+			id: this.state.curWidget,
+			device_id: this.props.match.params.id,
+			token: Cookies.get('__token')
+		};
+		let that = this;
+		axios.post('/ajax/control', param).then(function (data) {
+			let result = data.data;
+			if (result.result == 0) {
+				toast.success(result.message);
+			} else {
+				that.props.history.push('/login');
+			}
+		}).catch(function (error) {
+			console.log(error);
+		});
+	}
 	componentWillUnmount() {
 		this.socket.close();
 	}
@@ -107,9 +142,26 @@ class Virtual extends React.Component {
 				<div className="page">
 					<div className="panel panel-default">
 						<div className="panel-heading">
-							<span>index</span>
+							<span>实时数据展示</span>
 						</div>
-						<div className="panel-body">
+						<div className="control-area">
+							<div className="row">
+								<div className="col-md-6">
+									{Object.keys(this.state.canContorl).map(key => {
+										let widget = this.state.canContorl[key];
+										return (
+											<label key={key} className="ui-radio">
+												<input name="widget" type="radio" value={key} onChange={this.chooseWidget} />
+												<span>{widget.title}</span>
+											</label>
+										);
+									})}
+								</div>
+								<div className="col-md-5" style={{ paddingTop: 5 }}><textarea style={{ resize: 'none', width: '100%' }} onChange={this.changeValue}>{this.state.cmder}</textarea></div>
+								<div className="col-md-1" style={{ paddingTop: 10 }}><a href="javascript:;" className="btn btn-warning" onClick={this.sendControl}>控制</a></div>
+							</div>
+						</div>
+						<div className="panel-body">							
 							<div style={{...container, position:'relative'}}>
 								{Object.keys(elements).map(key => {
 									let eleData = elements[key];

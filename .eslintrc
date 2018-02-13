@@ -30,7 +30,6 @@
     "rules": {
         "semi": [2, "always"],
         "quotes": [2, "single"],
-        "indent": ["error", "tab"],
         "comma-dangle": ["error", "never"],
         "no-console": ["error", { allow: ["log", "warn", "error"] }],
         "no-param-reassign": ["error", { "props": false }]

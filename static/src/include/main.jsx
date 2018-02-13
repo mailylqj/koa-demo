@@ -17,6 +17,7 @@ import EditDevice from '@/pages/editdevice.jsx';
 import AddDevice from '@/pages/adddevice.jsx';
 import EditVR from '@/pages/editvr.jsx';
 import Company from '@/pages/company.jsx';
+import AddCompany from '@/pages/addCompany.jsx';
 import Audit from '@/pages/audit.jsx';
 import Imei from '@/pages/imei.jsx';
 import EditImei from '@/pages/editImei.jsx';
@@ -79,6 +80,7 @@ class Main extends React.Component {
 				<Route path="/adduser" component={AddUser}/>
 				<Route path="/user/:id" component={EditUser}/>
 				<Route path="/company" component={Company}/>
+				<Route path="/addcompany" component={AddCompany} />
 				<Route path="/audit" component={Audit}/>
 				<Route exact path="/imei" component={Imei}/>
 				<Route path="/imei/:id" component={EditImei}/>

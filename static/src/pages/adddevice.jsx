@@ -185,6 +185,14 @@ class AddDevice extends React.Component {
 										<div className="form-group">
 											<label className="col-md-3">命令</label>
 											<div className="col-md-9">
+												<div>
+													<span style={{width: '18%', display: 'inline-block',textAlign:'center'}}><label>设备地址</label></span>
+													<span style={{width: '18%', display: 'inline-block',textAlign:'center'}}><label>功能码</label></span>
+													<span style={{width: '18%', display: 'inline-block',textAlign:'center'}}><label>起始地址</label></span>
+													<span style={{width: '18%', display: 'inline-block',textAlign:'center'}}><label>命令长度</label></span>
+													<span style={{width: '18%', display: 'inline-block',textAlign:'center'}}><label>循环时间</label></span>
+													<span style={{width: '10%', display: 'inline-block',textAlign:'center'}}><label>        </label></span>
+												</div>
 												{this.state.device.cmd.map((item, index) => {
 													return (
 														<div style={{paddingTop: index > 0 ? 10 : 0 }} key={index}>
@@ -244,7 +252,7 @@ class AddDevice extends React.Component {
 											</div>
 										</div>
 										<div className="form-group text-center">
-											<button className="btn btn-w-md btn-primary" onClick={this.addDevice}>更新设备</button>
+											<button className="btn btn-w-md btn-primary" onClick={this.addDevice}>添加设备</button>
 											<div className="space"></div>
 											<button className="btn btn-w-md btn-default">清空</button>
 										</div>

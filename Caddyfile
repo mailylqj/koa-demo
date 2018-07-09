@@ -1,6 +1,6 @@
 localhost:8090 {
-	proxy /ajax/ localhost:8080
-	proxy /ws/ localhost:8080 {
+	proxy /ajax/ 101.132.136.210:80
+	proxy /ws/ 101.132.136.210:80 {
 		websocket
 	}
 	proxy / localhost:3000

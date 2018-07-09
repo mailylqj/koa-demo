@@ -3,3 +3,4 @@
 dist/**/*.map
 **/dist/
 dist/
+.DS_Store

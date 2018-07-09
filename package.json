@@ -8,12 +8,12 @@
     "dev": "npm run dev_server && npm run dev_static",
     "dev_server": "nodemon ./server/app.js",
     "dev_static": "webpack --watch --config ./static/build/webpack.dev.config.js",
-    "start_static": "webpack --config ./static/build/webpack.prod.config.js",
+    "start_static": "cross-env NODE_ENV=production | webpack --config ./static/build/webpack.prod.config.js",
     "start_server": "node ./server/app.js",
     "start": "npm run start_static & npm run start_server",
     "test_server": "nodemon ./test/app.js",
     "test": "npm run test_server",
-    "fast_dev": "webpack-dev-server --inline --hot --config ./static/build/webpack.dev.config.js"
+    "fast_dev": "cross-env NODE_ENV=development | webpack-dev-server --inline --hot --config ./static/build/webpack.dev.config.js"
   },
   "dependencies": {
     "axios": "^0.17.1",
@@ -45,6 +45,7 @@
     "react-router-dom": "^4.2.2",
     "react-toastify": "^3.2.2",
     "react-websocket": "^1.1.7",
+    "store": "^2.0.12",
     "ws": "^3.1.0",
     "xtemplate": "^4.2.4",
     "xtpl": "^3.1.9"

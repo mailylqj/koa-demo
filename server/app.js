@@ -12,6 +12,9 @@ const config = require('./../config');
 // const websockify = require('koa-websocket');
 const WebSocket = require('ws');
 
+const session = require('koa-session')
+const redisStore = require('koa-redis');
+
 // 加载模板引擎
 app.use(views(path.join(__dirname, './views'), {
 	extension: 'jade'
@@ -25,25 +28,52 @@ app.use(convert(koaStatic(
 // 错误处理机制
 onerror(app);
 
+// 使用ctx.body解析中间件
+app.use(bodyParser());
+
+app.use(session({
+	store: redisStore({
+		port: 6379,
+		host: '127.0.0.1'
+	}),
+	signed: false, //是否签名。(默认是 true)
+	maxAge: 60 * 60 * 1000,
+	// renew: true,  //是否在Session快过期时刷新Session的有效期。(默认是 false)
+	rolling: true // 是否每次响应时刷新Session的有效期。(默认是 false)
+}, app))
+
+app.use(async (ctx, next) => {
+	console.log(ctx.path);
+	if(!/login/i.test(ctx.path)){
+		if(!(ctx.session && ctx.session.isLogin)){
+			ctx.redirect('/login');
+		}else{
+			console.log(ctx.session)
+		}
+	}
+	await next();
+})
+
 // 设置主路由
 const index = require('./routes/index');
 // const login = require('./routes/login');
 // const user = require('./routes/user');
 // const chat = require('./routes/chat');
 
+const Api = require('./routes/restful');
+
 // 装载所有子路由
 const router = new Router();
 
-router.use('*', index.routes(), index.allowedMethods());
-// router.use('/login', login.routes(), login.allowedMethods());
-// router.use('/user', user.routes(), user.allowedMethods());
-// socket.ws.use(route.all('/chat', chat.routes(), chat.allowedMethods()));
+router.use('*', index.routes());
+// router.use('/login', login.routes());
+// router.use('/user', user.routes());
+// socket.ws.use(route.all('/chat', chat.routes()));
+router.use('/ajax', Api.routes())
 
 // 加载路由中间件
 app.use(router.routes()).use(router.allowedMethods());
 
-// 使用ctx.body解析中间件
-app.use(bodyParser());
 const data = { count: 2 };
 
 const appServer = app.listen(config.serverPort);
@@ -61,7 +91,10 @@ wss.on('connection', (ws, req) => {
 			}
 		});
 	});
-	ws.send(JSON.stringify(data));
+	/* setInterval(function(){
+		ws.send(JSON.stringify(data));
+	}, 1000); */
+	
 });
 
 console.log(`koa server is on port, ${config.serverPort}`);

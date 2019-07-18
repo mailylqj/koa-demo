@@ -20,7 +20,7 @@ class Aside extends React.Component {
 			<div id="nav-container">				
 				<div id="nav-wrapper"  text-align="center">
 					<ul className="list" id="nav">
-					{this.props.menus.map(function(item, index){
+					{this.props.menus.map((item, index) => {
 						let reg = new RegExp(item.link);
 						return (
 							<li  text-align="center" className={reg.test(path) ? 'active' : ''} key={index}>

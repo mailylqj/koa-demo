@@ -1,6 +1,7 @@
 const webpack = require('webpack');
 const merge = require('webpack-merge');
 const baseWebpackConfig = require('./webpack.base.config');
+const ParallelUglifyPlugin = require('webpack-parallel-uglify-plugin')
 
 module.exports = merge(baseWebpackConfig, {
 	// eval-source-map is faster for development
@@ -18,10 +19,15 @@ module.exports = merge(baseWebpackConfig, {
 				NODE_ENV: JSON.stringify('production')
 			}
 		}),
-		new webpack.optimize.UglifyJsPlugin({
-			minimize: true,
-			compress: {
-				warnings: false
+		new ParallelUglifyPlugin({
+			cacheDir: '.cache/',
+			uglifyJS:{
+				output: {
+					comments: false
+				},
+				compress: {
+					warnings: false
+				}
 			}
 		})
 	]

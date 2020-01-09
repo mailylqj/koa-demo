@@ -1,0 +1,9 @@
+export const FETCH_ACCOUNT_REQUEST = 'FETCH_ACCOUNT_REQUEST';
+
+export const LOGIN_REQUEST = 'LOGIN_REQUEST';
+export const LOGIN_SUCESS = 'LOGIN_SUCESS';
+
+export const LOGOUT_REQUEST = 'LOGOUT_REQUEST';
+export const LOGOUT_SUCESS = 'LOGOUT_SUCESS';
+
+export const FETCH_FAIL = 'FETCH_FAIL';
